@@ -1,7 +1,6 @@
 ### League of Legends API helpers
 
 ### API Key
-RGAPI-adc81e5d-262c-4a1a-8387-76fd03001780
 
 ### My account information 
 PUUID: eAbWnWb6mcgBP6jfl0Q4UQ3QDYmzEnePu24a6WGAM2glK6s2Z8GKTR59N30upXhSkIO5XJ3EzlpRUA
