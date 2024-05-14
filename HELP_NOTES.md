@@ -7,30 +7,30 @@
 # create this React project inside root of Spring project
 
 ### run docker
-# rename application.properties to application.yaml
+# rename application.properties to application.yaml (in main.resources)
 spring:
-application:
-name: Keyboard-Shortcut-Full-Stack
-datasource:
-driver-class-name: org.postgresql.Driver
-url: jdbc:postgresql://localhost:5432/keyboard-shortcut_dev
-username: dev
-password: password
+    application:
+        name: LoF_Dashboard
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/lof_dashboard_dev
+        username: dev
+        password: password
 
 # create docker-compose.yaml file in root
 # image to remain postgres (essentially a dependency)
 version: "3.8"
 services:
-postgres-db:
-container_name: keyboard-shortcut
-image: postgres
-restart: always
-environment:
-POSTGRES_USER: dev
-POSTGRES_PASSWORD: password
-POSTGRES_DB: keyboard-shortcut_dev
-ports:
-- "5432:5432"
+    postgres-db:
+        container_name: lof_dashboard
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: dev
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: lof_dashboard_dev
+        ports:
+            - "5432:5432"
 
 # run docker compose up -d
 

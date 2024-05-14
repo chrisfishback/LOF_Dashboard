@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: LoF_Dashboard
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lof_dashboard_dev
+    username: dev
+    password: password
