@@ -25,11 +25,11 @@ export function Header() {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{
+            backgroundColor: '#FDB0C0',
+        }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
-                    {/*<img src="../../assets/logo.png" alt="LoF Logo"/>*/}
                     <Box
                         component="img"
                         sx={{ height: 64, }}
