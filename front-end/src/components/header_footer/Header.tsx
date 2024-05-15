@@ -8,10 +8,8 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import logo from "../../assets/logo1.png"
-
-const pages = ['Dashboard', 'Teams', 'Admin'];
+import {Link} from "react-router-dom";
 
 export function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -83,11 +81,30 @@ export function Header() {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <Link style={{ textDecoration: 'none' }} to={"/"}>
+                                <Button
+                                    key='dashboard'
+                                    onClick={handleCloseNavMenu}
+                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Link style={{ textDecoration: 'none' }} to={"/teams"}>
+                                <Button
+                                    key='home'
+                                    onClick={handleCloseNavMenu}
+                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    Teams
+                                </Button>
+                            </Link>
+                            <Link style={{ textDecoration: 'none' }} to={"/admin"}>
+                                <Button
+                                    key='Admin'
+                                    onClick={handleCloseNavMenu}
+                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    Admin
+                                </Button>
+                            </Link>
                         </Menu>
                     </Box>
                     <Typography
@@ -109,15 +126,30 @@ export function Header() {
                         LoF
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (
+                        <Link style={{ textDecoration: 'none' }} to={"/"}>
                             <Button
-                                key={page}
+                                key='dashboard'
                                 onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block'}}
-                            >
-                                {page}
+                                sx={{my: 2, color: 'white', display: 'block'}}>
+                                Dashboard
                             </Button>
-                        ))}
+                        </Link>
+                        <Link style={{ textDecoration: 'none' }} to={"/teams"}>
+                            <Button
+                                key='home'
+                                onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block'}}>
+                                Teams
+                            </Button>
+                        </Link>
+                        <Link style={{ textDecoration: 'none' }} to={"/admin"}>
+                            <Button
+                                key='Admin'
+                                onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block'}}>
+                                Admin
+                            </Button>
+                        </Link>
                     </Box>
                 </Toolbar>
             </Container>
