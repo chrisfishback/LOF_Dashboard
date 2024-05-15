@@ -1,0 +1,10 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "eAbWnWb6mcgBP6jfl0Q4UQ3QDYmzEnePu24a6WGAM2glK6s2Z8GKTR59N30upXhSkIO5XJ3EzlpRUA",
+  "summonerId": "1M6OPqC9Yn9ak6Ux9kWrTtmILCWk9WwTORZ2KzjFhIYCNYs",
+  "summonerName": "TheBigHook",
+  "team": "Feet Finders"
+}
