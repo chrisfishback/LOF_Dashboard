@@ -8,14 +8,15 @@ export type PlayerListProps = {
 
 function TeamsPage(players:PlayerListProps) {
 
-    console.log(players)
-
     return (
         <>
             <h1>Teams Page</h1>
+
+
+
             <Accordion disabled >
                 <AccordionSummary className={'team'}>
-                    <Typography variant={"h5"} >Team 1</Typography>
+                    <Typography variant={'h5'} >Team 1</Typography>
                 </AccordionSummary>
             </Accordion>
 

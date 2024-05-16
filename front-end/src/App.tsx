@@ -11,17 +11,53 @@ import axios, {AxiosResponse} from "axios";
 export default function App() {
 
     const [players, setPlayers] = useState<Player[]>([]);
+    const [teamNames, setTeamNames] = useState<string[]>([])
+    const [teams, setTeams] = useState<Team[]>([])
+
+    useEffect(() => {
+        if (teamNames.length !== 0) {
+            const separatedTeams = separateTeams(players, teamNames);
+            setTeams(separatedTeams);
+        }
+    }, [players, teamNames]);
+
+    function getPlayersPerTeam(initTeam: string, players: Player[]): Player[] {
+        return players.filter((player: Player) => player.team === initTeam);
+    }
+
+    function separateTeams(players: Player[], teamNames: string[]): Team[] {
+        return teamNames.map(team => {
+            const teamPlayers = getPlayersPerTeam(team, players);
+            return {
+                name: team,
+                players: teamPlayers,
+            };
+        });
+    }
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/player')
             .then((response: AxiosResponse) => {
-                console.log(response.data);
                 setPlayers(response.data)
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/teams')
+            .then((response: AxiosResponse) => {
+                const teamsByName : string[] = response.data.map((el: { id: number, team: string }) => el.team);
+                setTeamNames(teamsByName);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+    }, []);
+
+    console.log(teams)
 
     return (
         <>
@@ -44,4 +80,9 @@ export type Player = {
     summonerId: string;
     summonerName: string;
     team: string;
+}
+
+export type Team = {
+    name: string;
+    players : Player[];
 }
