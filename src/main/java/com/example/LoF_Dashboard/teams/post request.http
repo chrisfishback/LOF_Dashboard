@@ -3,5 +3,55 @@ Content-Type: application/json
 Accept: application/json
 
 {
+  "team": "Tanner Time"
+}
+
+###
+
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+Accept: application/json
+
+{
+  "team": "Cucks Anonymous"
+}
+
+###
+
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+Accept: application/json
+
+{
+  "team": "First Time Gragas"
+}
+
+###
+
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+Accept: application/json
+
+{
+  "team": "Turtle Club"
+}
+
+###
+
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+Accept: application/json
+
+{
   "team": "Ornn"
+}
+
+###
+
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+Accept: application/json
+
+{
+  "team": "Feet Finders"
 }
