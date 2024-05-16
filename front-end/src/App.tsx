@@ -57,15 +57,13 @@ export default function App() {
 
     }, []);
 
-    console.log(teams)
-
     return (
         <>
             <Router>
                 <Header/>
                 <Routes>
                     <Route path="/" element={<Dashboard/>}/>
-                    <Route path="/teams" element={<TeamsPage players={players}/>}/>
+                    <Route path="/teams" element={<TeamsPage teams={teams}/>}/>
                     <Route path="/admin" element={<Admin/>}/>
                     <Route path="*" element={<Error/>}/>
                 </Routes>
