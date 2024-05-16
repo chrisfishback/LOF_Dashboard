@@ -2,8 +2,9 @@ import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/ma
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Player, Team} from "../App.tsx";
 
+type TeamsPageProps = { teams: Team[] };
 
-function TeamsPage(props : Team[]) {
+function TeamsPage(props : TeamsPageProps) {
 
     return (
         <>
