@@ -2,7 +2,7 @@ import './App.css'
 import {Header} from "./components/header_footer/Header.tsx";
 import {Routes, Route, BrowserRouter as Router} from "react-router-dom";
 import Error from "./components/Error.tsx"
-import Teams from "./components/Teams.tsx";
+import TeamsPage from "./components/TeamsPage.tsx";
 import Admin from "./components/Admin.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import {useEffect, useState} from "react";
@@ -29,7 +29,7 @@ export default function App() {
                 <Header/>
                 <Routes>
                     <Route path="/" element={<Dashboard/>}/>
-                    <Route path="/teams" element={<Teams players={players}/>}/>
+                    <Route path="/teams" element={<TeamsPage players={players}/>}/>
                     <Route path="/admin" element={<Admin/>}/>
                     <Route path="*" element={<Error/>}/>
                 </Routes>

@@ -6,7 +6,7 @@ export type PlayerListProps = {
     players: Player[]
 }
 
-function Teams(players:PlayerListProps) {
+function TeamsPage(players:PlayerListProps) {
 
     console.log(players)
 
@@ -40,7 +40,7 @@ function Teams(players:PlayerListProps) {
                     aria-controls="panel2-content"
                     id="panel2-header"
                 >
-                    Player 1
+                    Hardcoded
                 </AccordionSummary>
                 <AccordionDetails>
                     Rank: Poopy
@@ -54,7 +54,7 @@ function Teams(players:PlayerListProps) {
                     aria-controls="panel3-content"
                     id="panel3-header"
                 >
-                    Player 2
+                    Hardcoded
                 </AccordionSummary>
                 <AccordionDetails>
                     Rank: Poopy
@@ -64,4 +64,4 @@ function Teams(players:PlayerListProps) {
     )
 }
 
-export default Teams;
+export default TeamsPage;
