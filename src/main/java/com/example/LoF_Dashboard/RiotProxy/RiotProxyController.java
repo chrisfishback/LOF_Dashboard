@@ -24,4 +24,12 @@ public class RiotProxyController {
                 + summonerName + "/" + tagline + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
     }
+
+    //https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg?api_key=***
+    @GetMapping("/api/get-summoner/{puuid}")
+    public Object getSummoner(@PathVariable String puuid) {
+        String url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
+                + puuid + "?api_key=" + apiKey;
+        return restTemplate.getForObject(url, Object.class);
+    }
 }
