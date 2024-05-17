@@ -1,0 +1,67 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "sYySq-Ej3VwvRXrScoOHfHsfbTM9R8-6Dgyr6jXVtpP89-OjlhMOrEjkgR7F3bf9NbwW0el7IFr53Q",
+  "summonerId": "elnc9jha4tVSJC_qVcQmYS-VVvJlbYYcqimJEjyEMbsayMs",
+  "summonerName": "yummi cupkeki",
+  "team": "Feet Finders",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "DVMnwqFHjTenFfUE_2gU4RQI-IBMuY_SzmziqLILsbTKGpHQXPwIFaT9apUiVXQhzdUhkFAJuD937A",
+  "summonerId": "B7yBndHY52HgN-tvGWQMqKp8D2p9FDyN55BrkaxfHHNy-dY",
+  "summonerName": "SheriffSoco",
+  "team": "Feet Finders",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "04qBSB1yPEC75Uc8Ec-FcV2RvsnXsW7zUDWCu95LocQIolqiAUqJUSzBGBY3rYf7gqXa3Abgc9b4_A",
+  "summonerId": "iPkmEVuD3LnqCJnJoR6V6b474BRS2xvcKFWs0ZGigjimIow",
+  "summonerName": "SphincterDink",
+  "team": "Feet Finders",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "4CJzazlBoP7I97hNdjjgwTggh2WWbdTvK10iNA2CwaDhiMyZYsXVcBUhkqVvGMP_UcUqVOyn-ApLyQ",
+  "summonerId": "CaPheczO4HVoCb1PiVdqTQn_GtMTyK1XQjKFba8_ZCBRxpo",
+  "summonerName": "Big Poop",
+  "team": "Feet Finders",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "eAbWnWb6mcgBP6jfl0Q4UQ3QDYmzEnePu24a6WGAM2glK6s2Z8GKTR59N30upXhSkIO5XJ3EzlpRUA",
+  "summonerId": "1M6OPqC9Yn9ak6Ux9kWrTtmILCWk9WwTORZ2KzjFhIYCNYs",
+  "summonerName": "TheBigHook",
+  "team": "Feet Finders",
+  "tagline": "NA1"
+}

@@ -12,12 +12,14 @@ public class Player {
     private String summonerId;
     private String summonerName;
     private String team;
+    private String tagline;
 
-    public Player(String puuid, String summonerId, String summonerName, String team) {
+    public Player(String puuid, String summonerId, String summonerName, String team, String tagline) {
         this.puuid = puuid;
         this.summonerId = summonerId;
         this.summonerName = summonerName;
         this.team = team;
+        this.tagline = tagline;
     }
 
     public Player() {
@@ -25,6 +27,15 @@ public class Player {
         this.summonerId = "summonerId";
         this.summonerName = "summonerName";
         this.team = "team";
+        this.tagline = "tagline";
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 
     public String getPuuid() {

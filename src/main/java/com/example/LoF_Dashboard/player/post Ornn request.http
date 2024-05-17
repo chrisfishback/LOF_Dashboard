@@ -1,0 +1,55 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "L-8nPd33SToj8rLm6ejfyxIZPS1LA5t9EmOjPL1VOABlaV-miO2ChGXcZlFDm1yroH4_Hs_JlOIpCw",
+  "summonerId": "vhWPSrU2-eT0XdnmQp_-qyYSaG6oZqlALjFcsAMdQZbMU7Q",
+  "summonerName": "BrittanySPEARS",
+  "team": "Ornn",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "p9pf5Mp74WsrYzSf3p-HlyvymZNTMrijQIicZCkcfJQJNT2BTbuSQl4ot-KaDB4iY7S6uUSdlzQjHw",
+  "summonerId": "UfKK05ueCVZmwhpn3uxoIi5e26Rvguag2qPKXAsdMaKoZI0",
+  "summonerName": "Fazrawdes",
+  "team": "Ornn",
+  "tagline": "NA1"
+}
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "3rh8QZAg8_AbLLcLhhwxYQ9pItlNyNngnStQEIrbrKPBznxIq-FOR6jbvl9zLeDQ3PEU03wE_cq8Bg",
+  "summonerId": "lU7SbAvX2TZwfukmmLYUgsu2ryjWE9YNOJMXnxp5wAYtAo8",
+  "summonerName": "KiwoP",
+  "team": "Ornn",
+  "tagline": "NA1"
+}
+
+###
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+  "puuid": "thcetIPsvVul6OKdGd6MDdS3dIcQ6goA_HfwPrj-L8b0OJaWly-b98PlDvLc07hDjJdHz34G8Qbvpg",
+  "summonerId": "6YLMBAsd3uJOB2Gw9w3JnO3R4rFatxq2rwFFHld1RcbUDys",
+  "summonerName": "Sloppy",
+  "team": "Ornn",
+  "tagline": "NA1"
+}
