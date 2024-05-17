@@ -6,3 +6,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/lof_dashboard_dev
     username: dev
     password: password
+
+riot:
+  api:
+    key: RGAPI-8cb98147-84ca-422f-b1e9-6a0cdc758665

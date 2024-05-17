@@ -2,7 +2,6 @@ import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/ma
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Player, Team} from "../App.tsx";
 import PlayerPage from "./PlayerPage.tsx";
-import {useEffect} from "react";
 
 type TeamsPageProps = { teams: Team[] };
 
@@ -19,7 +18,7 @@ function TeamsPage(props : TeamsPageProps) {
                     <AccordionDetails>
                         <div style={{ width: '100%' }}>
                             {team.players.map((player: Player) => (
-                                <PlayerPage player={player}/>
+                                <PlayerPage key={player.id} player={player}/>
                             ))}
                         </div>
                     </AccordionDetails>

@@ -78,6 +78,7 @@ export type Player = {
     summonerId: string;
     summonerName: string;
     team: string;
+    tagline: string;
 }
 
 export type Team = {

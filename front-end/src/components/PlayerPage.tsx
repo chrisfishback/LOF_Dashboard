@@ -2,12 +2,34 @@ import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/ma
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Player} from "../App.tsx";
 import {useEffect} from "react";
+import axios, {AxiosResponse} from "axios";
 
 type PlayerPageProps = { player: Player };
 
 function PlayerPage(props : PlayerPageProps) {
 
-    useEffect(() => {
+    //const {player} = props
+    let {id, puuid, summonerId, summonerName, team, tagline} = props.player;
+
+    async function getPuuid(url: string) {
+        // https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/thebighook/NA1?api_key=***
+
+        await axios.get(url)
+            .then((response: AxiosResponse) => {
+                console.log(response.data);
+                puuid = response.data.puuid;
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    //get correct PUUID and summonerID using tagline and summonerName
+    useEffect( () => {
+
+        const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
+
+        getPuuid(puuid_url)
 
     }, []);
 
@@ -29,18 +51,18 @@ function PlayerPage(props : PlayerPageProps) {
 
 export default PlayerPage;
 
-type PlayerInfo = {
-    summonerName: string;
-    rank: string;
-    lastTenGames: prevGame[];
-}
-
-type prevGame = {
-    champion: string;
-    win: boolean;
-    lane: string;
-    damage: string;
-    kills: string;
-    deaths: string;
-    assists: string;
-}
+// type PlayerInfo = {
+//     summonerName: string;
+//     rank: string;
+//     lastTenGames: prevGame[];
+// }
+//
+// type prevGame = {
+//     champion: string;
+//     win: boolean;
+//     lane: string;
+//     damage: string;
+//     kills: string;
+//     deaths: string;
+//     assists: string;
+// }
