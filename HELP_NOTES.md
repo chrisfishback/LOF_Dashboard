@@ -18,7 +18,7 @@ spring:
         password: password
 
 # create docker-compose.yaml file in root
-# image to remain postgres (essentially a dependency)
+# image is a postgres image (essentially a dependency)
 version: "3.8"
 services:
     postgres-db:
@@ -65,19 +65,86 @@ Content-Type: application/json
 
 ### 4. create API functionality for get all (and test)
 
-### --- AS OF THIS POINT YOU SHOULD BE ABLE TO DISPLAY DATA AND POST DATA FROM FRONTEND ---
+### --- AT THIS POINT YOU SHOULD BE ABLE TO DISPLAY AND POST DATA FROM FRONTEND ---
 
 ### 1. Display get all data from backend DB 
-# import axios
-# add @CrossOrigin in API controller for temporary insecure solution for testing
-
-### 2. setup Vitest 
-# https://vitest.dev/guide/
-# npm i -D vitest
-# create vitest.config.ts, vitest.setup.ts
+# npm i axios
 # npm i msw
 # npm i @testing-library/react
-# create mocks in src and add handlers.ts node.ts
-# create __tests__ folder
+
+### 2. setup Vitest - front-end testing
+# https://vitest.dev/guide/
+# npm i -D vitest
+
+## update vite.config.ts
+# add the proxy for testing and cross-origin functionality
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+plugins: [react()],
+server: {
+port: 3000,
+proxy: {
+'/api': {
+target: 'http://localhost:8080',
+changeOrigin: true,
+}
+}
+}
+})
+
+## create vitest.config.ts
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+plugins: [react()],
+test: {
+environment: 'jsdom',
+globals: true,
+setupFiles: ['./vitest.setup.ts'],
+},
+})
+
+## create vitest.setup.ts
+import { beforeAll, afterEach, afterAll } from 'vitest'
+import { server } from './src/mocks/node'
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+## create mocks directory in src and add handlers.ts node.ts
+# handlers.ts (shortcut is the object in this example) (set up test data)
+import {HttpResponse, http} from "msw";
+
+const testShortcut = [ 
+{
+id: 1,
+shortcut: 'Option+Control+L',
+description: 'Prettify',
+},
+{
+id: 2,
+shortcut: 'Command+C',
+description: 'Copy',
+}
+]
+
+export const handlers = [
+http.get('/api/shortcut', () => {
+return HttpResponse.json(testShortcut)
+}),
+]
+
+# node.ts
+import { setupServer } from 'msw/node'
+import { handlers } from './handlers'
+
+export const server = setupServer(...handlers)
+
+## create __tests__ folder (in src)
 # Now write a test!
 
