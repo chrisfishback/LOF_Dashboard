@@ -1,19 +1,24 @@
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Player} from "../App.tsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
+import PlayerGameInfo, {GameInfo} from "./PlayerGameInfo.tsx";
 
 type PlayerPageProps = { player: Player };
 
 function PlayerPage(props : PlayerPageProps) {
 
+    const [playerInfo, setPlayerInfo] = useState<PlayerInfo>({} as PlayerInfo)
+
     //const {player} = props
     let {id, puuid, summonerId, summonerName, team, tagline} = props.player;
+
     let tempInfo : PlayerInfo = {
         summonerName: summonerName,
         rank: "temp",
         lastTwentyGames: [],
+        lastTwentyGamesInfo: [],
         summonerLevel: "-1",
     }
 
@@ -24,9 +29,8 @@ function PlayerPage(props : PlayerPageProps) {
 
         await axios.get(puuid_url)
             .then((response: AxiosResponse) => {
-                console.log(response.data);
+                console.log("Request: getAccountInformation");
                 puuid = response.data.puuid;
-
                 getSummonerInformation(puuid);
             })
             .catch((error) => {
@@ -34,48 +38,43 @@ function PlayerPage(props : PlayerPageProps) {
             });
     }
 
-    async function getSummonerInformation(init_puuid: string) {
-        //https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg?api_key=***
-
+    function getSummonerInformation(init_puuid: string) {
         const summonerId_url = `/api/get-summoner/${init_puuid}`;
 
-        await axios.get(summonerId_url)
+        axios.get(summonerId_url)
             .then((response: AxiosResponse) => {
-                console.log(response.data);
+                console.log("Request: getSummonerInformation");
                 summonerId = response.data.id;
                 tempInfo.summonerLevel = response.data.summonerLevel;
-
-                getLeagueInformation(summonerId);
-                getRankedMatchHistory(init_puuid);
+                getLeagueInformation(summonerId, init_puuid);
             })
             .catch((error) => {
                 console.error('Error fetching account data: ', error);
             });
     }
 
-    async function getLeagueInformation(init_id: string) {
+    function getLeagueInformation(init_id: string, init_puuid: string) {
         // /lol/league/v4/entries/by-summoner/{encryptedSummonerId}
 
         const leagueInfo_url = `/api/get-league-info/${init_id}`
 
-        await axios.get(leagueInfo_url)
+        axios.get(leagueInfo_url)
             .then((response: AxiosResponse) => {
-                console.log(response.data);
-
-                if (response.data.length === 0)
-                    tempInfo.rank = "No rank available this season"
-                else {
-
+                console.log("Request: getLeagueInformation");
+                if (response.data.length === 0) {
+                    tempInfo.rank = "No rank available this season";
+                } else {
+                    tempInfo.rank = "I need to do something about this - you have a rank";
                 }
+                getRankedMatchHistory(init_puuid);
             })
             .catch((error) => {
                 console.error('Error fetching league data:', error);
             });
     }
 
-    async function getRankedMatchHistory(init_puuid: string) {
-
-        const matchInfo_url = `/api/get-matches/${init_puuid}`
+    function getRankedMatchHistory(init_puuid: string) {
+        const matchInfo_url = `/api/get-matches/${init_puuid}`;
 
         await axios.get(matchInfo_url)
             .then((response: AxiosResponse) => {
@@ -88,6 +87,9 @@ function PlayerPage(props : PlayerPageProps) {
                     else
                         console.log("NULL DATA")
                 })
+
+                // set player info state upon receiving full data
+                setPlayerInfo(tempInfo);
             })
             .catch((error) => {
                 console.error('Error fetching match data:', error);
@@ -99,55 +101,47 @@ function PlayerPage(props : PlayerPageProps) {
 
         await axios.get(matchId_url)
             .then((response: AxiosResponse) => {
-                console.log(response.data);
+                console.log("Request: getMatchInformation");
                 parseMatchData(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching matchId data:', error);
             });
-
     }
 
-    function parseMatchData(matchData : any) {
-
+    function parseMatchData(matchData: any) {
         let playerNumber = -1;
 
-        let tempGameInfo : GameInfo = {
+        const tempGameInfo: GameInfo = {
             champion: "",
             win: false,
             lane: "",
             kills: -1,
             deaths: -1,
             assists: -1,
-        }
+        };
 
         let index = 0;
-        matchData.info.participants.map((player : any) => {
+        matchData.info.participants.map((player: any) => {
             if (player.summonerName === tempInfo.summonerName) {
                 playerNumber = index;
             }
-
             index++;
-        })
+        });
 
-        if (playerNumber != -1) {
-            //     champion: string;
-            tempGameInfo.champion = matchData.info.participants[playerNumber].championName;
-            //     win: boolean;
-            tempGameInfo.win = matchData.info.participants[playerNumber].win;
-            //     lane: number;
-            tempGameInfo.lane = matchData.info.participants[playerNumber].lane;
-            //     kills: number;
-            tempGameInfo.kills = matchData.info.participants[playerNumber].kills;
-            //     deaths: number;
-            tempGameInfo.deaths = matchData.info.participants[playerNumber].deaths;
-            //     assists: number;
-            tempGameInfo.assists = matchData.info.participants[playerNumber].assists;
+        if (playerNumber !== -1) {
+            const participant = matchData.info.participants[playerNumber];
+            tempGameInfo.champion = participant.championName;
+            tempGameInfo.win = participant.win;
+            tempGameInfo.lane = participant.lane;
+            tempGameInfo.kills = participant.kills;
+            tempGameInfo.deaths = participant.deaths;
+            tempGameInfo.assists = participant.assists;
 
-            console.log(tempGameInfo)
-        } else
-            console.log("ERROR FINDING CHAMPION INFORMATION")
-
+            tempInfo.lastTwentyGamesInfo.push(tempGameInfo);
+        } else {
+            console.log("ERROR FINDING CHAMPION INFORMATION");
+        }
     }
 
     //get correct PUUID and summonerID using tagline and summonerName
@@ -157,14 +151,17 @@ function PlayerPage(props : PlayerPageProps) {
 
     return (
         <>
-            <Accordion key={props.player.summonerId}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${props.player.summonerId}-content`} id={`${props.player.summonerId}-header`}>
-                    <Typography>{props.player.summonerName}</Typography>
+            <Accordion key={id}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${id}-content`} id={`${id}-${team}-header`}>
+                    <Typography>{summonerName}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Rank: temp
-                    </Typography>
+                    <Typography variant="h5">Ranked Game History</Typography>
+                    {playerInfo && playerInfo.lastTwentyGamesInfo ? (playerInfo.lastTwentyGamesInfo.map((game, index) => (
+                        <PlayerGameInfo key={index} gameInfo={game} />
+                    ))) : (
+                        <Typography>No game history available</Typography>
+                    )}
                 </AccordionDetails>
             </Accordion>
         </>
@@ -176,15 +173,7 @@ export default PlayerPage;
 type PlayerInfo = {
     summonerName: string;
     rank: string;
-    lastTwentyGames: [];
+    lastTwentyGames: string[];
+    lastTwentyGamesInfo: GameInfo[];
     summonerLevel: string;
-}
-
-type GameInfo = {
-    champion: string;
-    win: boolean;
-    lane: string;
-    kills: number;
-    deaths: number;
-    assists: number;
 }
