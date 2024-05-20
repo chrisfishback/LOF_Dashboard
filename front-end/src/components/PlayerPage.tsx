@@ -10,6 +10,7 @@ type PlayerPageProps = { player: Player };
 function PlayerPage(props : PlayerPageProps) {
 
     const [playerInfo, setPlayerInfo] = useState<PlayerInfo>({} as PlayerInfo)
+    const [gamesInfo, setGamesInfo] = useState<GameInfo[]>([])
 
     //const {player} = props
     let {id, puuid, summonerId, summonerName, team, tagline} = props.player;
@@ -17,8 +18,8 @@ function PlayerPage(props : PlayerPageProps) {
     let tempInfo : PlayerInfo = {
         summonerName: summonerName,
         rank: "temp",
-        lastTwentyGames: [],
-        lastTwentyGamesInfo: [],
+        prevGames: [],
+        //lastTwentyGamesInfo: [],
         summonerLevel: "-1",
     }
 
@@ -76,12 +77,12 @@ function PlayerPage(props : PlayerPageProps) {
     function getRankedMatchHistory(init_puuid: string) {
         const matchInfo_url = `/api/get-matches/${init_puuid}`;
 
-        await axios.get(matchInfo_url)
+        axios.get(matchInfo_url)
             .then((response: AxiosResponse) => {
                 console.log(response.data);
 
-                tempInfo.lastTwentyGames = response.data;
-                tempInfo.lastTwentyGames.map(el => {
+                tempInfo.prevGames = response.data;
+                tempInfo.prevGames.map(el => {
                     if (el != null)
                         getMatchInformation(el)
                     else
@@ -138,7 +139,7 @@ function PlayerPage(props : PlayerPageProps) {
             tempGameInfo.deaths = participant.deaths;
             tempGameInfo.assists = participant.assists;
 
-            tempInfo.lastTwentyGamesInfo.push(tempGameInfo);
+            setGamesInfo(prevItems => [...prevItems, tempGameInfo]);
         } else {
             console.log("ERROR FINDING CHAMPION INFORMATION");
         }
@@ -156,10 +157,13 @@ function PlayerPage(props : PlayerPageProps) {
                     <Typography>{summonerName}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="h5">Ranked Game History</Typography>
-                    {playerInfo && playerInfo.lastTwentyGamesInfo ? (playerInfo.lastTwentyGamesInfo.map((game, index) => (
-                        <PlayerGameInfo key={index} gameInfo={game} />
-                    ))) : (
+                    <Typography variant="h6">Rank: {playerInfo.rank} - Level: {playerInfo.summonerLevel}</Typography>
+                    <Typography variant="h6">Ranked Game History</Typography>
+                    {gamesInfo.length > 0 ? (
+                        gamesInfo.map((game, index) => (
+                            <PlayerGameInfo key={index} gameInfo={game} />
+                        ))
+                    ) : (
                         <Typography>No game history available</Typography>
                     )}
                 </AccordionDetails>
@@ -173,7 +177,6 @@ export default PlayerPage;
 type PlayerInfo = {
     summonerName: string;
     rank: string;
-    lastTwentyGames: string[];
-    lastTwentyGamesInfo: GameInfo[];
     summonerLevel: string;
+    prevGames: [];
 }

@@ -10,6 +10,7 @@ function TeamsPage(props : TeamsPageProps) {
     return (
         <>
             <h1>Teams Page</h1>
+            <h6>Sit back and relax - this will take awhile to populate</h6>
             {props.teams.map((team: Team) => (
                 <Accordion key={team.name}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${team.name}-content`} id={`${team.name}-header`}>

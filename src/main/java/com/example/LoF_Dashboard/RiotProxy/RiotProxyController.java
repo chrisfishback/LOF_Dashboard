@@ -19,7 +19,8 @@ public class RiotProxyController {
     }
 
     @GetMapping("/api/get-account/{summonerName}/{tagline}")
-    public Object getAccount(@PathVariable String summonerName, @PathVariable String tagline) {
+    public Object getAccount(@PathVariable String summonerName, @PathVariable String tagline) throws InterruptedException {
+        Thread.sleep(5000);
         String url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
                 + summonerName + "/" + tagline + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
@@ -27,7 +28,8 @@ public class RiotProxyController {
 
     //https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg?api_key=***
     @GetMapping("/api/get-summoner/{puuid}")
-    public Object getSummoner(@PathVariable String puuid) {
+    public Object getSummoner(@PathVariable String puuid) throws InterruptedException {
+        Thread.sleep(5000);
         String url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
                 + puuid + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
@@ -35,7 +37,8 @@ public class RiotProxyController {
 
     // /lol/league/v4/entries/by-summoner/{encryptedSummonerId}
     @GetMapping("/api/get-league-info/{id}")
-    public Object getLeagueInformation(@PathVariable String id) {
+    public Object getLeagueInformation(@PathVariable String id) throws InterruptedException {
+        Thread.sleep(5000);
         String url = "https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/"
                 + id + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
@@ -43,15 +46,17 @@ public class RiotProxyController {
 
     // https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg/ids?type=ranked&start=0&count=20&api_key=
     @GetMapping("/api/get-matches/{puuid}")
-    public Object getRankedMatchHistory(@PathVariable String puuid) {
+    public Object getRankedMatchHistory(@PathVariable String puuid) throws InterruptedException {
+        Thread.sleep(5000);
         String url = "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/"
-                + puuid + "/ids?type=ranked&start=0&count=1&api_key=" + apiKey;
+                + puuid + "/ids?type=ranked&start=0&count=5&api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
     }
 
     //https://americas.api.riotgames.com/lol/match/v5/matches/NA1_4969064550?api_key=
     @GetMapping("/api/get-match-info/{matchId}")
-    public Object getMatchInformation(@PathVariable String matchId) {
+    public Object getMatchInformation(@PathVariable String matchId) throws InterruptedException {
+        Thread.sleep(5000);
         String url = "https://americas.api.riotgames.com/lol/match/v5/matches/"
                 + matchId + "?api_key=" + apiKey;
         return restTemplate.getForObject(url, Object.class);
