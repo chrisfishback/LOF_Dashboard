@@ -36,7 +36,7 @@ export default function App() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/player')
+        axios.get('/api/player')
             .then((response: AxiosResponse) => {
                 setPlayers(response.data)
             })
@@ -46,7 +46,7 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/teams')
+        axios.get('/api/teams')
             .then((response: AxiosResponse) => {
                 const teamsByName : string[] = response.data.map((el: { id: number, team: string }) => el.team);
                 setTeamNames(teamsByName);
@@ -54,7 +54,6 @@ export default function App() {
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-
     }, []);
 
     return (
@@ -74,8 +73,6 @@ export default function App() {
 
 export type Player = {
     id: number;
-    puuid: string;
-    summonerId: string;
     summonerName: string;
     team: string;
     tagline: string;

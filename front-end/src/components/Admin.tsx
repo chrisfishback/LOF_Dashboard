@@ -1,32 +1,11 @@
-
-// function Admin() {
-//
-//
-//     return (
-//         <>
-//             <h1>Admin Page</h1>
-//             {/* add team */}
-//
-//             {/* add player */}
-//
-//             {/* delete player/team */}
-//
-//             {/* change player */}
-//
-//             {/* add week */}
-//
-//             {/* add games to week */}
-//         </>
-//     )
-// }
-//
-// export default Admin;
-
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import AddTeamPlayers from "./admin-components/AddTeamPlayers.tsx";
+import ModifyTeams from "./admin-components/ModifyTeams.tsx";
+import AddWeekGames from "./admin-components/AddWeekGames.tsx";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -68,35 +47,23 @@ export default function Admin() {
     setValue(newValue);
   };
 
-    {/* add team */}
-
-    {/* add player */}
-
-    {/* delete player/team */}
-
-    {/* change player */}
-
-    {/* add week */}
-
-    {/* add games to week */}
-
   return (
     <Box sx={{ width: '100%', marginTop: 4 }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Add Teams/Players" {...a11yProps(0)} />
+          <Tab label="Modify Teams" {...a11yProps(1)} />
+          <Tab label="Add Week/Games" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Add Teams/Players
+        <AddTeamPlayers/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Modify Teams
+        <ModifyTeams/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Add Week/Games
+        <AddWeekGames/>
       </CustomTabPanel>
     </Box>
   );

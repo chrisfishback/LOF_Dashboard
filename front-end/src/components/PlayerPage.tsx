@@ -13,7 +13,7 @@ function PlayerPage(props : PlayerPageProps) {
     const [gamesInfo, setGamesInfo] = useState<GameInfo[]>([])
 
     //const {player} = props
-    let {id, puuid, summonerId, summonerName, team, tagline} = props.player;
+    let {id, summonerName, team, tagline} = props.player;
 
     let tempInfo : PlayerInfo = {
         summonerName: summonerName,
@@ -30,8 +30,8 @@ function PlayerPage(props : PlayerPageProps) {
         await axios.get(puuid_url)
             .then((response: AxiosResponse) => {
                 console.log("Request: getAccountInformation");
-                puuid = response.data.puuid;
-                getSummonerInformation(puuid);
+                //puuid = response.data.puuid;
+                getSummonerInformation(response.data.puuid);
             })
             .catch((error) => {
                 console.error('Error fetching summoner data: ', error);
@@ -44,9 +44,9 @@ function PlayerPage(props : PlayerPageProps) {
         axios.get(summonerId_url)
             .then((response: AxiosResponse) => {
                 console.log("Request: getSummonerInformation");
-                summonerId = response.data.id;
+                //summonerId = response.data.id;
                 tempInfo.summonerLevel = response.data.summonerLevel;
-                getLeagueInformation(summonerId, init_puuid);
+                getLeagueInformation(response.data.id, init_puuid);
             })
             .catch((error) => {
                 console.error('Error fetching account data: ', error);

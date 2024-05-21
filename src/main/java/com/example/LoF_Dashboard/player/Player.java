@@ -8,23 +8,17 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String puuid;
-    private String summonerId;
     private String summonerName;
     private String team;
     private String tagline;
 
-    public Player(String puuid, String summonerId, String summonerName, String team, String tagline) {
-        this.puuid = puuid;
-        this.summonerId = summonerId;
+    public Player(String summonerName, String team, String tagline) {
         this.summonerName = summonerName;
         this.team = team;
         this.tagline = tagline;
     }
 
     public Player() {
-        this.puuid = "puuid";
-        this.summonerId = "summonerId";
         this.summonerName = "summonerName";
         this.team = "team";
         this.tagline = "tagline";
@@ -36,22 +30,6 @@ public class Player {
 
     public void setTagline(String tagline) {
         this.tagline = tagline;
-    }
-
-    public String getPuuid() {
-        return puuid;
-    }
-
-    public void setPuuid(String puuid) {
-        this.puuid = puuid;
-    }
-
-    public String getSummonerId() {
-        return summonerId;
-    }
-
-    public void setSummonerId(String summonerId) {
-        this.summonerId = summonerId;
     }
 
     public String getSummonerName() {
