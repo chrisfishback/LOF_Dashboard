@@ -19,7 +19,6 @@ function PlayerPage(props : PlayerPageProps) {
         summonerName: summonerName,
         rank: "temp",
         prevGames: [],
-        //lastTwentyGamesInfo: [],
         summonerLevel: "-1",
     }
 
@@ -174,7 +173,7 @@ function PlayerPage(props : PlayerPageProps) {
 
 export default PlayerPage;
 
-type PlayerInfo = {
+export type PlayerInfo = {
     summonerName: string;
     rank: string;
     summonerLevel: string;
