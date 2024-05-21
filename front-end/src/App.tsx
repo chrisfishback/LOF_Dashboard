@@ -63,7 +63,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Dashboard/>}/>
                     <Route path="/teams" element={<TeamsPage teams={teams}/>}/>
-                    <Route path="/admin" element={<Admin/>}/>
+                    <Route path="/admin" element={<Admin teams={teams} setTeams={setTeams} players={players} setPlayers={setPlayers}/>}/>
                     <Route path="*" element={<Error/>}/>
                 </Routes>
             </Router>

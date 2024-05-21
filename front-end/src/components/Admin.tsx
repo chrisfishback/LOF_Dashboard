@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import AddTeamPlayers from "./admin-components/AddTeamPlayers.tsx";
 import ModifyTeams from "./admin-components/ModifyTeams.tsx";
 import AddWeekGames from "./admin-components/AddWeekGames.tsx";
+import {Player, Team} from "../App.tsx";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,14 +41,17 @@ function a11yProps(index: number) {
   };
 }
 
-export default function Admin() {
-  const [value, setValue] = React.useState(0);
+type AdminPageProps = { teams: Team[], setTeams: React.Dispatch<React.SetStateAction<Team[]>>, players: Player[], setPlayers: React.Dispatch<React.SetStateAction<Player[]>> };
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+export default function Admin(props : AdminPageProps) {
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
+    };
 
-  return (
+    return (
     <Box sx={{ width: '100%', marginTop: 4 }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -57,7 +61,7 @@ export default function Admin() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <AddTeamPlayers/>
+        <AddTeamPlayers teams={props.teams} setTeams={props.setTeams} players={props.players} setPlayers={props.setPlayers}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <ModifyTeams/>
@@ -66,5 +70,5 @@ export default function Admin() {
         <AddWeekGames/>
       </CustomTabPanel>
     </Box>
-  );
+    );
 }
