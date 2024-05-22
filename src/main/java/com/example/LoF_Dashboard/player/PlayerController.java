@@ -28,4 +28,11 @@ public class PlayerController {
     public List<Player> getAllPlayer() {
         return playerRepository.findAll();
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePlayerById(@PathVariable Long id) {
+        playerRepository.deleteById(id);
+    }
+
 }

@@ -13,15 +13,15 @@ interface TabPanelProps {
   value: number;
 }
 
-function CustomTabPanel(props: TabPanelProps) {
+function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -35,8 +35,8 @@ function CustomTabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
   };
 }
 
@@ -58,12 +58,12 @@ export default function Admin(props : AdminPageProps) {
           <Tab label="Add Week/Games" {...a11yProps(1)} />
         </Tabs>
         </Box>
-        <CustomTabPanel value={value} index={0}>
+        <TabPanel value={value} index={0}>
             <ModifyTeams teams={props.teams} setTeams={props.setTeams} players={props.players} setPlayers={props.setPlayers}/>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
             <AddWeekGames/>
-        </CustomTabPanel>
+        </TabPanel>
     </Box>
     );
 }
