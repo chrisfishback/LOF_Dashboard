@@ -51,7 +51,7 @@ function ModifyTeams(props : AddTeamPlayersProps) {
     return (
         <>
             <Grid container spacing={2} sx={{maxWidth: 600, margin: 'auto'}}>
-                <TeamsList teams={props.teams}/>
+                <TeamsList teams={props.teams} setPlayers={props.setPlayers}/>
             </Grid>
             <form onSubmit={handlePlayerSubmit}>
                 <h4>Add Player</h4>

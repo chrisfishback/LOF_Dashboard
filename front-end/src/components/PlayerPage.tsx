@@ -64,7 +64,8 @@ function PlayerPage(props : PlayerPageProps) {
                 if (response.data.length === 0) {
                     tempInfo.rank = "No rank available this season";
                 } else {
-                    tempInfo.rank = "I need to do something about this - you have a rank";
+                    tempInfo.rank = response.data[0].tier + " " +response.data[0].rank;
+                    //console.log(response.data[0].rank)
                 }
                 getRankedMatchHistory(init_puuid);
             })

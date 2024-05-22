@@ -35,4 +35,21 @@ public class PlayerController {
         playerRepository.deleteById(id);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Player replaceShortcut(@RequestBody Player newPlayer, @PathVariable Long id) {
+        return playerRepository.findById(id)
+                .map(player -> {
+                    player.setSummonerName(newPlayer.getSummonerName());
+                    player.setTagline(newPlayer.getTagline());
+                    player.setTeam(newPlayer.getTeam());
+                    return playerRepository.save(player);
+                })
+                .orElseGet(() -> {
+                    newPlayer.setId(id);
+                    return playerRepository.save(newPlayer);
+                });
+    }
+
+
 }

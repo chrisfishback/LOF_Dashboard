@@ -1,56 +1,24 @@
-import {Team} from "../../App.tsx";
-import {Grid, List, ListItem, ListItemText} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Player, Team} from "../../App.tsx";
+import {Grid, List} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import EditIcon from '@mui/icons-material/Edit';
-import axios from "axios";
+import * as React from "react";
+import PlayerItem from "./PlayerItem.tsx";
 
-type TeamsListProps = { teams: Team[] }
-
+type TeamsListProps = { teams: Team[], setPlayers: React.Dispatch<React.SetStateAction<Player[]>>}
 
 function TeamsList(props: TeamsListProps) {
-
-    const handleDelete = (id : number) => () => {
-        let url : string =  '/api/player/' + id;
-
-        //console.log(url)
-
-        axios.delete(url)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.error('Deletion Error', error);
-            });
-    }
-
 
     return (
         <>
 
-            {props.teams.map((team) => (
-                <Grid item xs={12}>
+            {props.teams.map((team, index) => (
+                <Grid item xs={12} key={index}>
                     <List>
                         <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white'}}>
                             {team.name}
                         </Typography>
-                        {team.players.map((player) => (
-                            <ListItem
-                                key={player.id}
-                                secondaryAction={
-                                    <IconButton edge="end" aria-label="delete" onClick={handleDelete(player.id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                }
-                            >
-                                <IconButton edge="end" aria-label="edit">
-                                    <EditIcon />
-                                </IconButton>
-                                <ListItemText sx={{paddingLeft:2}}
-                                    primary={player.summonerName+'#'+player.tagline}
-                                />
-                            </ListItem>
+                        {team.players.map((player: Player, index) => (
+                            <PlayerItem key={index} player={player} teams={props.teams} setPlayers={props.setPlayers}/>
                         ))}
                     </List>
                 </Grid>
