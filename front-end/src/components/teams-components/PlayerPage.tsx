@@ -1,6 +1,6 @@
-import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {Player} from "../App.tsx";
+import {Player} from "../../App.tsx";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import PlayerGameInfo, {GameInfo} from "./PlayerGameInfo.tsx";
@@ -159,13 +159,17 @@ function PlayerPage(props : PlayerPageProps) {
                 <AccordionDetails>
                     <Typography variant="h6">Rank: {playerInfo.rank} - Level: {playerInfo.summonerLevel}</Typography>
                     <Typography variant="h6">Ranked Game History</Typography>
-                    {gamesInfo.length > 0 ? (
-                        gamesInfo.map((game, index) => (
-                            <PlayerGameInfo key={index} gameInfo={game} />
-                        ))
-                    ) : (
-                        <Typography>No game history available</Typography>
-                    )}
+                    <Grid container spacing={2} sx={{margin: 'auto'}}>
+                        {gamesInfo.length > 0 ? (
+                            gamesInfo.map((game, index) => (
+                                <Grid item xs={4}>
+                                    <PlayerGameInfo key={index} gameInfo={game} />
+                                </Grid>
+                            ))
+                        ) : (
+                            <Typography>No game history available</Typography>
+                        )}
+                    </Grid>
                 </AccordionDetails>
             </Accordion>
         </>
