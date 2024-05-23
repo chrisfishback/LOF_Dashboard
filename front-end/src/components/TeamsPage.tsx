@@ -14,7 +14,7 @@ function TeamsPage(props : TeamsPageProps) {
                 <h1>Teams Page</h1>
                 <h6>Sit back and relax - this will take awhile to populate</h6>
                 {props.teams.map((team: Team, index) => (
-                    <Grid container spacing={2} sx={{maxWidth: 800, margin: 'auto'}}>
+                    <Grid key={index} container spacing={2} sx={{maxWidth: 800, margin: 'auto'}}>
                         <Grid item xs={12} key={index}>
                             <Accordion key={team.name}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${team.name}-content`} id={`${team.name}-header`}>

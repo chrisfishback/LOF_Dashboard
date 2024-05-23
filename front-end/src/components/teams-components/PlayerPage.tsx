@@ -22,12 +22,12 @@ function PlayerPage(props : PlayerPageProps) {
         summonerLevel: "-1",
     }
 
-    async function getAccountInformation() {
+    function getAccountInformation() {
         // https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/thebighook/NA1?api_key=***
 
         const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
 
-        await axios.get(puuid_url)
+        axios.get(puuid_url)
             .then((response: AxiosResponse) => {
                 console.log("Request: getAccountInformation");
                 //puuid = response.data.puuid;
@@ -162,7 +162,7 @@ function PlayerPage(props : PlayerPageProps) {
                     <Grid container spacing={2} sx={{margin: 'auto'}}>
                         {gamesInfo.length > 0 ? (
                             gamesInfo.map((game, index) => (
-                                <Grid item xs={4}>
+                                <Grid key={index} item xs={12}>
                                     <PlayerGameInfo key={index} gameInfo={game} />
                                 </Grid>
                             ))

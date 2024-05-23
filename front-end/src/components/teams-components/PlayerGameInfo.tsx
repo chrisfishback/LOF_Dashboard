@@ -14,21 +14,21 @@ function PlayerGameInfo(props : PlayerGameInfoPageProps) {
             {/*<p>{champion} - {lane} - {kills}/{deaths}/{assists}</p>*/}
             {/*<img src={champion_image} alt={champion}/>*/}
             {/*{ win ? <p>win</p> : <p>loss</p> }*/}
-            <Card sx={{ maxWidth: 150 }}>
-                <CardMedia
-                    sx={{ height: 100 }}
-                    image={champion_image}
-                    title={champion}
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+            <Card sx={{ display: 'flex', alignItems: 'center' }}>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                    <CardMedia
+                        sx={{ height: 50, width: 50, marginRight: 2 }}
+                        image={champion_image}
+                        title={champion}
+                    />
+                    <Typography gutterBottom variant="h5" component="div" sx={{ flexGrow: 1 }}>
                         {champion} - {lane}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" sx={{ marginLeft: 2 }}>
                         {kills}/{deaths}/{assists}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        { win ? 'win' : 'loss' }
+                    <Typography variant="body2" color="text.secondary" sx={{ marginLeft: 2 }}>
+                        {win ? 'win' : 'loss'}
                     </Typography>
                 </CardContent>
             </Card>

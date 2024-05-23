@@ -7,7 +7,6 @@ import org.springframework.web.servlet.resource.ResourceUrlProvider;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/player")
 public class PlayerController {
 
