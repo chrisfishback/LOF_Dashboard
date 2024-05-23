@@ -3,10 +3,30 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Player, Team} from "../App.tsx";
 import PlayerPage from "./teams-components/PlayerPage.tsx";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import {useState} from "react";
 
 type TeamsPageProps = { teams: Team[] };
 
 function TeamsPage(props : TeamsPageProps) {
+
+    const [lastRefreshTime, setLastRefreshTime] = useState(0);
+    const refreshInterval = 60000; // 60 seconds in milliseconds
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [show, setShow] = useState(false);
+
+    function handleRefresh() {
+        const currentTime = Date.now();
+        if (currentTime - lastRefreshTime >= refreshInterval) {
+            setShow(false);
+            console.log('Clicked Refresh');
+            setLastRefreshTime(currentTime);
+        } else {
+            setTimeLeft(Math.floor((refreshInterval - (currentTime - lastRefreshTime)) / 1000));
+            console.log('Please wait', timeLeft, 'seconds before refreshing again.');
+            setShow(true);
+        }
+    }
 
     return (
         <>
@@ -31,6 +51,10 @@ function TeamsPage(props : TeamsPageProps) {
                         </Grid>
                     </Grid>
                 ))}
+                <Grid item xs={3} sx={{paddingTop: 2}}>
+                    <Button variant="contained" color={'primary'} onClick={handleRefresh}>Refresh Match Data</Button>
+                    {show && <p>Please wait {timeLeft} seconds before refreshing again</p>}
+                </Grid>
             </Box>
         </>
     )
