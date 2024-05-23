@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS PLAYER (
-    id SERIAL PRIMARY KEY NOT NULL,
-    puuid TEXT NOT NULL,
-    summoner_id TEXT NOT NULL,
-    summoner_name TEXT NOT NULL,
-    team TEXT NOT NULL
-)
