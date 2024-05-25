@@ -12,7 +12,6 @@ function PlayerPage(props : PlayerPageProps) {
     const [playerInfo, setPlayerInfo] = useState<PlayerInfo>({} as PlayerInfo)
     const [gamesInfo, setGamesInfo] = useState<GameInfo[]>([])
 
-    //const {player} = props
     let {id, summonerName, team, tagline} = props.player;
 
     let tempInfo : PlayerInfo = {
@@ -26,8 +25,6 @@ function PlayerPage(props : PlayerPageProps) {
 
         axios.get(rankedMatches_url)
             .then((response: AxiosResponse) => {
-                //console.log("IN PLAYER REQUESTING RANKED MATCH INFO");
-                //puuid = response.data.puuid;
                 console.log("GET RANKED MATCH INFO FOR EACH PLAYER: ", response)
                 parseMatchData(response.data)
             })
@@ -37,8 +34,6 @@ function PlayerPage(props : PlayerPageProps) {
     }
 
     function getAccountInformation() {
-        // https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/thebighook/NA1?api_key=***
-
         const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
 
         axios.get(puuid_url)
@@ -85,53 +80,7 @@ function PlayerPage(props : PlayerPageProps) {
             });
     }
 
-    //
-    // function getRankedMatchHistory(init_puuid: string) {
-    //     const matchInfo_url = `/api/get-matches/${init_puuid}`;
-    //
-    //     axios.get(matchInfo_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log(response.data);
-    //
-    //             tempInfo.prevGames = response.data;
-    //             tempInfo.prevGames.map(el => {
-    //                 if (el != null)
-    //                     getMatchInformation(el)
-    //                 else
-    //                     console.log("NULL DATA")
-    //             })
-    //
-    //             // set player info state upon receiving full data
-    //             setPlayerInfo(tempInfo);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching match data:', error);
-    //         });
-    // }
-    //
-    // async function getMatchInformation(matchId: string) {
-    //     const matchId_url = `/api/get-match-info/${matchId}`
-    //
-    //     await axios.get(matchId_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log("Request: getMatchInformation");
-    //             parseMatchData(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching matchId data:', error);
-    //         });
-    // }
-    //
     function parseMatchData(matchData: any)  {
-
-        // let tempGameInfo: GameInfo = {
-        //     champion: "",
-        //     win: false,
-        //     lane: "",
-        //     kills: -1,
-        //     deaths: -1,
-        //     assists: -1,
-        // };
 
         matchData.map((match : any) => {
             let tempGameInfo : GameInfo = {
@@ -154,10 +103,8 @@ function PlayerPage(props : PlayerPageProps) {
         })
     }
 
-    //get correct PUUID and summonerID using tagline and summonerName
     useEffect(  () => {
         getAccountInformation();
-
         getRankedMatches();
     }, []);
 
