@@ -6,7 +6,7 @@ type PlayerGameInfoPageProps = { gameInfo: GameInfo };
 function PlayerGameInfo(props : PlayerGameInfoPageProps) {
 
     let {champion, win, lane, kills, deaths, assists} = props.gameInfo
-    console.log("PLAYER GAME PAGE")
+    //console.log("PLAYER GAME PAGE")
     let champion_image = 'https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/' + champion + '.png';
 
     return (

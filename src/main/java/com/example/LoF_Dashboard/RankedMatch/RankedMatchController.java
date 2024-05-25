@@ -17,34 +17,21 @@ public class RankedMatchController {
         this.rankedMatchService = rankedMatchService;
     }
 
-//    @GetMapping("/{summonerName}/{tagline}")
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    public List<RankedMatch> getAllRankedMatch(@PathVariable String summonerName, @PathVariable String tagline) {
-//        return rankedMatchService.getAllRankedMatches(summonerName, tagline);
-//    }
+    //get already saved matches by summoner name
+    @GetMapping("/{summoner}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RankedMatch> getRankedMatchHistoryFromTable(@PathVariable String summoner) throws InterruptedException {
+        List<RankedMatch> obj = rankedMatchService.getRankedMatchHistoryFromTable(summoner);
+        return obj;
+    }
 
-//    @GetMapping("/api/get-account/{summonerName}/{tagline}")
-//    public Object getAccount(@PathVariable String summonerName, @PathVariable String tagline) throws InterruptedException {
-//        Thread.sleep(5000);
-//        String url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
-//                + summonerName + "/" + tagline + "?api_key=" + apiKey;
-//        Object obj = restTemplate.getForObject(url, Object.class);
-//        return obj;
-//    }
+    //get, delete by summoner, and save updated set of matches - from API by puuid and summoner name
+    @GetMapping("/{summoner}/{puuid}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<RankedMatch> createRankedMatchHistory(@PathVariable String summoner, @PathVariable String puuid) throws InterruptedException {
+        List<RankedMatch> matchHistory = rankedMatchService.createRankedMatchHistory(summoner, puuid);
+        return matchHistory;
+    }
+    //curl -X GET http://localhost:8080/api/ranked-matches/TheBigHook/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg
 
-
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public RankedMatch createRankedMatch(@RequestBody RankedMatch rankedMatch) {
-//        return rankedMatchRepository.save(rankedMatch);
-//    }
-//
-//    @GetMapping
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    public List<RankedMatch> getAllRankedMatch() {
-//        return rankedMatchRepository.findAll();
-//    }
-
-//    @DeleteMapping
-//    @ResponseStatus(HttpStatus.ACCEPTED)
 }

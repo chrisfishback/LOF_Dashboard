@@ -5,6 +5,7 @@ import PlayerPage from "./teams-components/PlayerPage.tsx";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useState} from "react";
+import axios, {AxiosResponse} from "axios";
 
 type TeamsPageProps = { teams: Team[] };
 
@@ -20,6 +21,35 @@ function TeamsPage(props : TeamsPageProps) {
         if (currentTime - lastRefreshTime >= refreshInterval) {
             setShow(false);
             console.log('Clicked Refresh');
+
+            props.teams.map(team => {
+                team.players.map(player => {
+
+                    const puuid_url = `/api/get-account/${player.summonerName}/${player.tagline}`;
+
+                    axios.get(puuid_url)
+                        .then((response: AxiosResponse) => {
+                            console.log("Request: getAccountInformation");
+                            //puuid = response.data.puuid;
+
+                            const matchInfo_url = `/api/ranked-matches/${player.summonerName}/${response.data.puuid}`
+
+                            axios.get(matchInfo_url)
+                                .then((response: AxiosResponse) => {
+                                    console.log(response);
+                                    console.log("Got data for: ", player.summonerName )
+                                })
+                                .catch((error) => {
+                                    console.error('Error fetching league data:', error);
+                                });
+
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching summoner data: ', error);
+                        });
+                })
+            })
+
             setLastRefreshTime(currentTime);
         } else {
             setTimeLeft(Math.floor((refreshInterval - (currentTime - lastRefreshTime)) / 1000));
