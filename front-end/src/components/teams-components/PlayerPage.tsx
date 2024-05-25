@@ -15,12 +15,11 @@ function PlayerPage(props : PlayerPageProps) {
     //const {player} = props
     let {id, summonerName, team, tagline} = props.player;
 
-    // let tempInfo : PlayerInfo = {
-    //     summonerName: summonerName,
-    //     rank: "temp",
-    //     prevGames: [],
-    //     summonerLevel: "-1",
-    // }
+    let tempInfo : PlayerInfo = {
+        summonerName: summonerName,
+        rank: "temp",
+        summonerLevel: "-1",
+    }
 
     function getRankedMatches() {
         const rankedMatches_url = `/api/ranked-matches/${summonerName}`;
@@ -37,57 +36,55 @@ function PlayerPage(props : PlayerPageProps) {
             });
     }
 
-    // function getAccountInformation() {
-    //     // https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/thebighook/NA1?api_key=***
-    //
-    //     const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
-    //
-    //     axios.get(puuid_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log("Request: getAccountInformation");
-    //             //puuid = response.data.puuid;
-    //             getSummonerInformation(response.data.puuid);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching summoner data: ', error);
-    //         });
-    // }
-    //
-    // function getSummonerInformation(init_puuid: string) {
-    //     const summonerId_url = `/api/get-summoner/${init_puuid}`;
-    //
-    //     axios.get(summonerId_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log("Request: getSummonerInformation");
-    //             //summonerId = response.data.id;
-    //             tempInfo.summonerLevel = response.data.summonerLevel;
-    //             getLeagueInformation(response.data.id, init_puuid);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching account data: ', error);
-    //         });
-    // }
-    //
-    // function getLeagueInformation(init_id: string, init_puuid: string) {
-    //     // /lol/league/v4/entries/by-summoner/{encryptedSummonerId}
-    //
-    //     const leagueInfo_url = `/api/get-league-info/${init_id}`
-    //
-    //     axios.get(leagueInfo_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log("Request: getLeagueInformation");
-    //             if (response.data.length === 0) {
-    //                 tempInfo.rank = "No rank available this season";
-    //             } else {
-    //                 tempInfo.rank = response.data[0].tier + " " +response.data[0].rank;
-    //                 //console.log(response.data[0].rank)
-    //             }
-    //             getRankedMatchHistory(init_puuid);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching league data:', error);
-    //         });
-    // }
+    function getAccountInformation() {
+        // https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/thebighook/NA1?api_key=***
+
+        const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
+
+        axios.get(puuid_url)
+            .then((response: AxiosResponse) => {
+                console.log("Request: getAccountInformation");
+                //puuid = response.data.puuid;
+                getSummonerInformation(response.data.puuid);
+            })
+            .catch((error) => {
+                console.error('Error fetching summoner data: ', error);
+            });
+    }
+
+    function getSummonerInformation(init_puuid: string) {
+        const summonerId_url = `/api/get-summoner/${init_puuid}`;
+
+        axios.get(summonerId_url)
+            .then((response: AxiosResponse) => {
+                console.log("Request: getSummonerInformation");
+                tempInfo.summonerLevel = response.data.summonerLevel;
+                getLeagueInformation(response.data.id);
+            })
+            .catch((error) => {
+                console.error('Error fetching account data: ', error);
+            });
+    }
+
+    function getLeagueInformation(init_id: string) {
+        const leagueInfo_url = `/api/get-league-info/${init_id}`
+
+        axios.get(leagueInfo_url)
+            .then((response: AxiosResponse) => {
+                console.log("Request: getLeagueInformation");
+                if (response.data.length === 0) {
+                    tempInfo.rank = "No rank available this season";
+                } else {
+                    tempInfo.rank = response.data[0].tier + " " +response.data[0].rank;
+                }
+
+                setPlayerInfo(tempInfo);
+            })
+            .catch((error) => {
+                console.error('Error fetching league data:', error);
+            });
+    }
+
     //
     // function getRankedMatchHistory(init_puuid: string) {
     //     const matchInfo_url = `/api/get-matches/${init_puuid}`;
@@ -159,7 +156,7 @@ function PlayerPage(props : PlayerPageProps) {
 
     //get correct PUUID and summonerID using tagline and summonerName
     useEffect(  () => {
-        //getAccountInformation();
+        getAccountInformation();
 
         getRankedMatches();
     }, []);
@@ -196,5 +193,4 @@ export type PlayerInfo = {
     summonerName: string;
     rank: string;
     summonerLevel: string;
-    prevGames: [];
 }
