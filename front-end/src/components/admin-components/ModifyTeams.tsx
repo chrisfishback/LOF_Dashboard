@@ -8,6 +8,8 @@ import TeamsList from "./TeamsList.tsx";
 
 type AddTeamPlayersProps = { teams: Team[], setTeams: React.Dispatch<React.SetStateAction<Team[]>>, players: Player[], setPlayers: React.Dispatch<React.SetStateAction<Player[]>> };
 
+
+//using teamInput for multiple of the input forms. It's causing issues
 function ModifyTeams(props : AddTeamPlayersProps) {
 
     const [summonerNameInput, setSummonerNameInput] = useState("");
