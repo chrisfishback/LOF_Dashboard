@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import {useState} from "react";
 import Button from "@mui/material/Button";
 import {Team} from "../../App.tsx";
+import Box from "@mui/material/Box";
 
 type AddWeekGamesProps = {
     teams: Team[];
@@ -14,8 +15,10 @@ function AddWeekGames(props: AddWeekGamesProps) {
     const [gameIdInput, setGameIdInput] = useState("");
     const [team1Input, setTeam1Input] = useState("");
     const [team2Input, setTeam2Input] = useState("");
+    const [weekInput, setWeekInput] = useState(-1)
 
-    function  handleWeekSubmit() {
+    function  handleWeekSubmit(event: React.FormEvent) {
+        event.preventDefault();
         console.log("new week")
         let tempWeek : GameWeek = {
             week: gameWeeks.length+1,
@@ -24,38 +27,55 @@ function AddWeekGames(props: AddWeekGamesProps) {
         setGameWeeks(prevState => [...prevState, tempWeek])
     }
 
-    function handleGameSubmit() {
-        console.log(gameWeeks);
-        console.log(gameIdInput);
+    function handleGameSubmit(event: React.FormEvent) {
+        event.preventDefault();
+
+        let tempGame = {
+            gameId: gameIdInput,
+            team1: team1Input,
+            team2: team2Input
+        }
+
+        gameWeeks[weekInput-1].games.push(tempGame);
+
+        setGameWeeks(prevState => {
+            const updatedWeeks = [...prevState];
+            updatedWeeks[weekInput - 1] = {
+                ...updatedWeeks[weekInput - 1],
+                games: [...updatedWeeks[weekInput - 1].games, tempGame],
+            };
+            return updatedWeeks;
+        });
+
+        setGameIdInput("");
+        setTeam1Input("");
+        setTeam2Input("");
+        setWeekInput(1); // Reset week input to default value
     }
 
     return (
-        <>
-            <Grid container spacing={2} sx={{maxWidth: 600, margin: 'auto'}}>
+        <Box sx={{ width: '100%', marginTop: 4 }}>
+            <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
                 {gameWeeks && gameWeeks.map((gameWeek, weekIndex) => (
-                    <div key={weekIndex}>
-                        <Grid item xs={12}>
-                            <Typography variant="h5" sx={{bgcolor: '#FDB0C0', borderRadius: 1, color: 'white'}}>
-                                Week {gameWeek.week}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <List>
-                                {gameWeek.games && gameWeek.games.map((game) => (
-                                    <ListItem key={game.gameId}>
-                                        <ListItemText sx={{paddingLeft: 2}}
-                                                      primary={`${game.gameId} - ${game.teams[0]} vs ${game.teams[1]}`}/>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Grid>
-                    </div>
+                    <Grid item xs={12} key={weekIndex}>
+                        <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white', padding: 1 }}>
+                            Week {gameWeek.week}
+                        </Typography>
+                        <List>
+                            {gameWeek.games && gameWeek.games.map((game, gameIndex) => (
+                                <ListItem key={gameIndex}>
+                                    <ListItemText sx={{ paddingLeft: 2 }}
+                                                  primary={`${game.gameId} - ${game.team1} vs ${game.team2}`} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Grid>
                 ))}
             </Grid>
 
             <form onSubmit={handleWeekSubmit}>
-                <Grid container spacing={2} sx={{maxWidth: 600, margin: 'auto'}}>
-                    <Grid item xs={3} sx={{paddingTop: 2}}>
+                <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
+                    <Grid item xs={12} sx={{ paddingTop: 2 }}>
                         <Button variant="contained" color={'primary'} type={'submit'}>Add Week</Button>
                     </Grid>
                 </Grid>
@@ -63,14 +83,30 @@ function AddWeekGames(props: AddWeekGamesProps) {
 
             <form onSubmit={handleGameSubmit}>
                 <h4>Add Game</h4>
-                <Grid container spacing={2} sx={{maxWidth: 600, margin: 'auto'}}>
-                    <Grid item xs={12}>
+                <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
+                    <Grid item xs={4}>
+                        <FormControl required sx={{ width: '100%' }}>
+                            <InputLabel id="week-label">Week</InputLabel>
+                            <Select
+                                labelId="week-label"
+                                id="week"
+                                value={weekInput}
+                                onChange={e => setWeekInput(e.target.value as number)}
+                                label="Week"
+                                required
+                            >
+                                {gameWeeks.map(el => (<MenuItem key={el.week} value={el.week}>{el.week}</MenuItem>))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={8}>
                         <TextField required id="game-id" label="Game Id" variant="standard"
-                                   sx={{width: '100%'}}
-                                   onChange={e => setGameIdInput(e.target.value)}/>
+                                   sx={{ width: '100%' }}
+                                   value={gameIdInput}
+                                   onChange={e => setGameIdInput(e.target.value)} />
                     </Grid>
                     <Grid item xs={6}>
-                        <FormControl required sx={{width: '100%'}}>
+                        <FormControl required sx={{ width: '100%' }}>
                             <InputLabel id="team-1-label">Team 1</InputLabel>
                             <Select
                                 labelId="team-1-label"
@@ -85,7 +121,7 @@ function AddWeekGames(props: AddWeekGamesProps) {
                         </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormControl required sx={{width: '100%'}}>
+                        <FormControl required sx={{ width: '100%' }}>
                             <InputLabel id="team-2-label">Team 2</InputLabel>
                             <Select
                                 labelId="team-2-label"
@@ -99,13 +135,13 @@ function AddWeekGames(props: AddWeekGamesProps) {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={3} sx={{paddingTop: 2}}>
+                    <Grid item xs={12} sx={{ paddingTop: 2 }}>
                         <Button variant="contained" color={'primary'} type={'submit'}>Add Game</Button>
                     </Grid>
                 </Grid>
             </form>
-        </>
-    )
+        </Box>
+    );
 }
 
 export default AddWeekGames;
@@ -117,5 +153,6 @@ export type GameWeek = {
 
 export type RecGameInfo = {
     gameId: string;
-    teams: string[];
+    team1: string;
+    team2: string;
 }

@@ -3,10 +3,10 @@ import {Header} from "./components/header_footer/Header.tsx";
 import {Routes, Route, BrowserRouter as Router} from "react-router-dom";
 import Error from "./components/Error.tsx"
 import TeamsPage from "./components/TeamsPage.tsx";
-import Admin from "./components/Admin.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import {useEffect, useState} from "react";
 import axios, {AxiosResponse} from "axios";
+import AdminPageWrapper from "./components/Admin.tsx";
 
 export default function App() {
 
@@ -63,7 +63,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Dashboard/>}/>
                     <Route path="/teams" element={<TeamsPage teams={teams}/>}/>
-                    <Route path="/admin" element={<Admin teams={teams} setTeams={setTeams} players={players} setPlayers={setPlayers}/>}/>
+                    <Route path="/admin/*" element={<AdminPageWrapper teams={teams} setTeams={setTeams} players={players} setPlayers={setPlayers} />} />
                     <Route path="*" element={<Error/>}/>
                 </Routes>
             </Router>
