@@ -33,7 +33,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
+function tabProps(index: number) {
   return {
     id: `tab-${index}`,
     'aria-controls': `tabpanel-${index}`,
@@ -44,25 +44,31 @@ type AdminPageProps = { teams: Team[], setTeams: React.Dispatch<React.SetStateAc
 
 export default function Admin(props : AdminPageProps) {
 
-    const [value, setValue] = React.useState(0);
+    const currentTab = () : number  => {
+        let path = window.location.pathname
+        if (path === "/Search") return 1
+        return 2
+    }
+
+    const [value, setValue] = React.useState(currentTab);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+        setValue(newValue);
     };
 
     return (
     <Box sx={{ width: '100%', marginTop: 4 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-          <Tab label="Modify Teams" {...a11yProps(0)} />
-          <Tab label="Add Week/Games" {...a11yProps(1)} />
+          <Tab label="Modify Teams" {...tabProps(0)} />
+          <Tab label="Add Week/Games" {...tabProps(1)} />
         </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
             <ModifyTeams teams={props.teams} setTeams={props.setTeams} players={props.players} setPlayers={props.setPlayers}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            <AddWeekGames/>
+            <AddWeekGames teams={props.teams}/>
         </TabPanel>
     </Box>
     );

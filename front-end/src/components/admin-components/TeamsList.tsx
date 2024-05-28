@@ -17,7 +17,7 @@ function TeamsList(props: TeamsListProps) {
                         <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white'}}>
                             {team.name}
                         </Typography>
-                        {team.player && team.players.map((player: Player, index) => (
+                        {team.players && team.players.map((player: Player, index) => (
                             <PlayerItem key={index} player={player} teams={props.teams} setPlayers={props.setPlayers}/>
                         ))}
                     </List>
