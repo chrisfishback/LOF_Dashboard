@@ -4,6 +4,9 @@ import {useState} from "react";
 import Button from "@mui/material/Button";
 import {Team} from "../../App.tsx";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import * as React from "react";
 
 type AddWeekGamesProps = {
     teams: Team[];
@@ -15,7 +18,7 @@ function AddWeekGames(props: AddWeekGamesProps) {
     const [gameIdInput, setGameIdInput] = useState("");
     const [team1Input, setTeam1Input] = useState("");
     const [team2Input, setTeam2Input] = useState("");
-    const [weekInput, setWeekInput] = useState(-1)
+    const [weekInput, setWeekInput] = useState(1)
 
     function  handleWeekSubmit(event: React.FormEvent) {
         event.preventDefault();
@@ -33,7 +36,8 @@ function AddWeekGames(props: AddWeekGamesProps) {
         let tempGame = {
             gameId: gameIdInput,
             team1: team1Input,
-            team2: team2Input
+            team2: team2Input,
+            week: weekInput,
         }
 
         gameWeeks[weekInput-1].games.push(tempGame);
@@ -53,6 +57,10 @@ function AddWeekGames(props: AddWeekGamesProps) {
         setWeekInput(1); // Reset week input to default value
     }
 
+    function handleDeleteWeek(week:number) {
+        console.log("Unsure if I would like to implement this feature: ", week)
+    }
+
     return (
         <Box sx={{ width: '100%', marginTop: 4 }}>
             <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
@@ -60,6 +68,9 @@ function AddWeekGames(props: AddWeekGamesProps) {
                     <Grid item xs={12} key={weekIndex}>
                         <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white', padding: 1 }}>
                             Week {gameWeek.week}
+                            <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteWeek(weekIndex)} sx={{marginLeft: '420px'}}>
+                                <DeleteIcon/>
+                            </IconButton>
                         </Typography>
                         <List>
                             {gameWeek.games && gameWeek.games.map((game, gameIndex) => (
@@ -155,4 +166,5 @@ export type RecGameInfo = {
     gameId: string;
     team1: string;
     team2: string;
+    week: number;
 }
