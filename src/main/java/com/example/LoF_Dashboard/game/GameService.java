@@ -2,6 +2,8 @@ package com.example.LoF_Dashboard.game;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameService {
 
@@ -13,5 +15,9 @@ public class GameService {
 
     public Game createGame(Game game) {
         return gameRepository.save(game);
+    }
+
+    public List<Game> getAllGames() {
+        return gameRepository.findAll();
     }
 }

@@ -1,65 +1,118 @@
-import {FormControl, Grid, InputLabel, List, ListItem, ListItemText, MenuItem, Select, TextField} from "@mui/material";
+import { FormControl, Grid, InputLabel, List, ListItem, ListItemText, MenuItem, Select, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import {Team} from "../../App.tsx";
+import { Team } from "../../App";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as React from "react";
+import axios, { AxiosResponse } from "axios";
 
 type AddWeekGamesProps = {
     teams: Team[];
 }
 
-function AddWeekGames(props: AddWeekGamesProps) {
+export type GameWeek = {
+    week: number;
+    games: RecGameInfo[];
+}
 
-    const [gameWeeks, setGameWeeks] = useState<GameWeek[]>([])
+export type RecGameInfo = {
+    gameId: string;
+    team1: string;
+    team2: string;
+    week: number;
+}
+
+function AddWeekGames(props: AddWeekGamesProps) {
+    const [gameWeeks, setGameWeeks] = useState<GameWeek[]>([]);
     const [gameIdInput, setGameIdInput] = useState("");
     const [team1Input, setTeam1Input] = useState("");
     const [team2Input, setTeam2Input] = useState("");
-    const [weekInput, setWeekInput] = useState(1)
+    const [weekInput, setWeekInput] = useState(1);
 
-    function  handleWeekSubmit(event: React.FormEvent) {
+    function handleWeekSubmit(event: React.FormEvent) {
         event.preventDefault();
-        console.log("new week")
-        let tempWeek : GameWeek = {
-            week: gameWeeks.length+1,
+        console.log("new week");
+        let tempWeek: GameWeek = {
+            week: gameWeeks.length + 1,
             games: [],
-        }
-        setGameWeeks(prevState => [...prevState, tempWeek])
+        };
+        setGameWeeks(prevState => [...prevState, tempWeek]);
     }
 
     function handleGameSubmit(event: React.FormEvent) {
         event.preventDefault();
 
-        let tempGame = {
+        let tempGame: RecGameInfo = {
             gameId: gameIdInput,
             team1: team1Input,
             team2: team2Input,
             week: weekInput,
-        }
+        };
 
-        gameWeeks[weekInput-1].games.push(tempGame);
+        axios.post('/api/game', tempGame)
+            .then((response) => {
+                console.log(response);
 
-        setGameWeeks(prevState => {
-            const updatedWeeks = [...prevState];
-            updatedWeeks[weekInput - 1] = {
-                ...updatedWeeks[weekInput - 1],
-                games: [...updatedWeeks[weekInput - 1].games, tempGame],
-            };
-            return updatedWeeks;
-        });
+                setGameWeeks(prevState => {
+                    const updatedWeeks = [...prevState];
+                    const weekIndex = updatedWeeks.findIndex(week => week.week === weekInput);
+                    if (weekIndex !== -1) {
+                        updatedWeeks[weekIndex] = {
+                            ...updatedWeeks[weekIndex],
+                            games: [...updatedWeeks[weekIndex].games, tempGame].sort((a, b) => a.team1.localeCompare(b.team1)),
+                        };
+                    }
+                    return updatedWeeks;
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
         setGameIdInput("");
         setTeam1Input("");
         setTeam2Input("");
-        setWeekInput(1); // Reset week input to default value
     }
 
-    function handleDeleteWeek(week:number) {
-        console.log("Unsure if I would like to implement this feature: ", week)
+    function handleDeleteWeek(week: number) {
+        console.log("Unsure if I would like to implement this feature: ", week);
+        // implement delete functionality if required
     }
+
+    function parseGames(games: RecGameInfo[]) {
+        // need map to only update state once
+        const weeksMap = new Map<number, RecGameInfo[]>();
+
+        games.forEach(game => {
+            if (!weeksMap.has(game.week)) {
+                weeksMap.set(game.week, []);
+            }
+            weeksMap.get(game.week)?.push(game);
+        });
+
+        // sort games for ~supreme~ usability
+        const newGameWeeks = Array.from(weeksMap.entries()).map(([week, games]) => ({
+            week,
+            games: games.sort((a, b) => a.team1.localeCompare(b.team1))
+        }));
+
+        setGameWeeks(newGameWeeks);
+    }
+
+    useEffect(() => {
+        // Get request to get game data and populate page
+        axios.get('/api/game')
+            .then((response: AxiosResponse<RecGameInfo[]>) => {
+                console.log(response.data);
+                parseGames(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
     return (
         <Box sx={{ width: '100%', marginTop: 4 }}>
@@ -68,8 +121,8 @@ function AddWeekGames(props: AddWeekGamesProps) {
                     <Grid item xs={12} key={weekIndex}>
                         <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white', padding: 1 }}>
                             Week {gameWeek.week}
-                            <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteWeek(weekIndex)} sx={{marginLeft: '420px'}}>
-                                <DeleteIcon/>
+                            <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteWeek(gameWeek.week)} sx={{ marginLeft: '420px' }}>
+                                <DeleteIcon />
                             </IconButton>
                         </Typography>
                         <List>
@@ -87,7 +140,7 @@ function AddWeekGames(props: AddWeekGamesProps) {
             <form onSubmit={handleWeekSubmit}>
                 <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
                     <Grid item xs={12} sx={{ paddingTop: 2 }}>
-                        <Button variant="contained" color={'primary'} type={'submit'}>Add Week</Button>
+                        <Button variant="contained" color="primary" type="submit">Add Week</Button>
                     </Grid>
                 </Grid>
             </form>
@@ -147,7 +200,7 @@ function AddWeekGames(props: AddWeekGamesProps) {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sx={{ paddingTop: 2 }}>
-                        <Button variant="contained" color={'primary'} type={'submit'}>Add Game</Button>
+                        <Button variant="contained" color="primary" type="submit">Add Game</Button>
                     </Grid>
                 </Grid>
             </form>
@@ -157,14 +210,3 @@ function AddWeekGames(props: AddWeekGamesProps) {
 
 export default AddWeekGames;
 
-export type GameWeek = {
-    week: number;
-    games: RecGameInfo[];
-}
-
-export type RecGameInfo = {
-    gameId: string;
-    team1: string;
-    team2: string;
-    week: number;
-}

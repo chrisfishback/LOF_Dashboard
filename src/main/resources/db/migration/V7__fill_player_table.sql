@@ -1,0 +1,45 @@
+INSERT INTO player (team, summoner_name, tagline)
+VALUES
+    ('Tanner Time', 'Nekter', 'NA1'),
+    ('Tanner Time', 'Smithmasterflex', 'NA1'),
+    ('Tanner Time', 'LawnMowingCholo', 'NA1'),
+    ('Tanner Time', 'Sara Tohnin', 'NA1'),
+    ('Tanner Time', 'GroundForce0', 'NA1'),
+
+    ('Cucks Anonymous', 'HaKiunaMatata', 'NA1'),
+    ('Cucks Anonymous', 'mrpehnusguy', 'NA1'),
+    ('Cucks Anonymous', 'LEEEROYmmJENKINS', 'NA1'),
+    ('Cucks Anonymous', 'whitsway', 'NA1'),
+    ('Cucks Anonymous', 'the off acount', 'NA1'),
+    ('Cucks Anonymous', 'Berry Mac0kiner', 'NA1'),
+    ('Cucks Anonymous', 'BrittanySPEARS', 'NA1'),
+
+    ('First Time Gragas', 'oxymoronical', 'NA1'),
+    ('First Time Gragas', 'Hond', 'NA1'),
+    ('First Time Gragas', 'TSL Carry Potter', 'NA1'),
+    ('First Time Gragas', 'Ihavetwospoons', 'NA1'),
+    ('First Time Gragas', 'FalconPride', 'NA1'),
+
+    ('Turtle Club', 'molemanmole', 'NA1'),
+    ('Turtle Club', 'damnhubes', 'NA1'),
+    ('Turtle Club', 'imthecarryhere', 'NA1'),
+    ('Turtle Club', 'BigFloppyHonkers', 'NA1'),
+    ('Turtle Club', 'Taco Del MAr', 'NA1'),
+    ('Turtle Club', 'watermelum', 'NA1'),
+    ('Turtle Club', 'kittenmurderer69', 'NA1'),
+
+    ('Ornn', 'Kite', 'NA1'),
+    ('Ornn', 'Fazrawdes', 'NA1'),
+    ('Ornn', 'roughly 44 ducks', 'NA1'),
+    ('Ornn', 'douchealicious', 'NA1'),
+    ('Ornn', 'Kiwop', 'NA1'),
+    ('Ornn', 'Sloppy', 'NA1'),
+    ('Ornn', 'coleasice', 'NA1'),
+
+    ('Feet Finders', 'Sphincterdink', 'NA1'),
+    ('Feet Finders', 'Sherrif Soco', 'NA1'),
+    ('Feet Finders', 'TheBigHook', 'NA1'),
+    ('Feet Finders', 'yummi cupkeki', 'NA1'),
+    ('Feet Finders', 'BIG P00P', 'NA1'),
+    ('Feet Finders', 'ITS GIRTHY GREG', 'NA1'),
+    ('Feet Finders', 'xHawk19', 'NA1');

@@ -11,17 +11,27 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String gameId;
     private String team1;
     private String team2;
     private int week;
 
-    public Game(String team1, String team2, int week) {
+    public Game(String gameId, String team1, String team2, int week) {
+        this.gameId = gameId;
         this.team1 = team1;
         this.team2 = team2;
         this.week = week;
     }
 
     public Game() {
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     public Long getId() {
