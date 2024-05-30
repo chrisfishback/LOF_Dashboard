@@ -12,7 +12,7 @@ type TeamsPageProps = { teams: Team[] };
 function TeamsPage(props : TeamsPageProps) {
 
     const [lastRefreshTime, setLastRefreshTime] = useState(0);
-    const refreshInterval = 60000; // 60 seconds in milliseconds
+    const refreshInterval = 120000; // 120 seconds in milliseconds
     const [timeLeft, setTimeLeft] = useState(0);
     const [show, setShow] = useState(false);
 

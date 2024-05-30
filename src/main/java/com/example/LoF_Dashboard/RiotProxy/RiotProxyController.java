@@ -50,27 +50,4 @@ public class RiotProxyController {
         Object obj = restTemplate.getForObject(url, Object.class);
         return obj;
     }
-
-    //---- move to ranked match controller
-
-//    // https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg/ids?type=ranked&start=0&count=20&api_key=
-//    @GetMapping("/api/get-matches/{puuid}")
-//    public Object getRankedMatchHistory(@PathVariable String puuid) throws InterruptedException {
-//        Thread.sleep(5000);
-//        String url = "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/"
-//                + puuid + "/ids?type=ranked&start=0&count=5&api_key=" + apiKey;
-//        Object obj = restTemplate.getForObject(url, Object.class);
-//        return obj;
-//    }
-//
-//    //https://americas.api.riotgames.com/lol/match/v5/matches/NA1_4969064550?api_key=
-//    @GetMapping("/api/get-match-info/{matchId}")
-//    public Object getMatchInformation(@PathVariable String matchId) throws InterruptedException {
-//        Thread.sleep(5000);
-//        String url = "https://americas.api.riotgames.com/lol/match/v5/matches/"
-//                + matchId + "?api_key=" + apiKey;
-//        Object obj = restTemplate.getForObject(url, Object.class);
-//        return obj;
-//    }
-
 }
