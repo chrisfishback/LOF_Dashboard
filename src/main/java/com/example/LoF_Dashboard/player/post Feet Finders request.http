@@ -55,3 +55,15 @@ Accept: application/json
   "team": "Feet Finders",
   "tagline": "NA1"
 }
+
+###
+
+POST http://localhost:8080/api/player
+Content-Type: application/json
+Accept: application/json
+
+{
+"summonerName": "sara tohnin",
+"team": "Feet Finders",
+"tagline": "NA1"
+}

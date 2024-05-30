@@ -17,10 +17,10 @@ function TeamsPage(props : TeamsPageProps) {
     const [show, setShow] = useState(false);
 
     function handleRefresh() {
+        console.log("clicked refresh")
         const currentTime = Date.now();
         if (currentTime - lastRefreshTime >= refreshInterval) {
             setShow(false);
-            console.log('Clicked Refresh');
 
             props.teams.map(team => {
                 team.players.map(player => {
@@ -29,8 +29,7 @@ function TeamsPage(props : TeamsPageProps) {
 
                     axios.get(puuid_url)
                         .then((response: AxiosResponse) => {
-                            console.log("Request: getAccountInformation");
-                            //puuid = response.data.puuid;
+                            console.log("Backend refresh request for: ", player.summonerName);
 
                             const matchInfo_url = `/api/ranked-matches/${player.summonerName}/${response.data.puuid}`
 

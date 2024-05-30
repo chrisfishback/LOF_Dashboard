@@ -38,7 +38,7 @@ function PlayerPage(props : PlayerPageProps) {
 
         axios.get(puuid_url)
             .then((response: AxiosResponse) => {
-                console.log("Request: getAccountInformation");
+                console.log("Get Account Info on Load for: ", summonerName);
                 //puuid = response.data.puuid;
                 getSummonerInformation(response.data.puuid);
             })
@@ -52,7 +52,6 @@ function PlayerPage(props : PlayerPageProps) {
 
         axios.get(summonerId_url)
             .then((response: AxiosResponse) => {
-                console.log("Request: getSummonerInformation");
                 tempInfo.summonerLevel = response.data.summonerLevel;
                 getLeagueInformation(response.data.id);
             })
@@ -66,7 +65,6 @@ function PlayerPage(props : PlayerPageProps) {
 
         axios.get(leagueInfo_url)
             .then((response: AxiosResponse) => {
-                console.log("Request: getLeagueInformation");
                 if (response.data.length === 0) {
                     tempInfo.rank = "No rank available this season";
                 } else {

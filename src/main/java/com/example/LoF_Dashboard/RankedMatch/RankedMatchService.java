@@ -43,7 +43,7 @@ public class RankedMatchService {
         String getMatchIdsUrl = "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/"
                 + puuid + "/ids?type=ranked&start=0&count=5&api_key=" + apiKey;
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         return (List<String>) restTemplate.getForObject(getMatchIdsUrl, List.class);
     }
 
@@ -60,7 +60,7 @@ public class RankedMatchService {
     }
 
     public RankedMatch getMatchInfo(String matchId, String summonerName) throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(10000);
 
         RankedMatch tempMatch = new RankedMatch();
 
@@ -74,7 +74,8 @@ public class RankedMatchService {
 
         Map<String, Object> participants = (Map<String, Object>) fetchedMatchInfo.get("info");
         for (Map<String, Object> player : (List<Map<String, Object>>) participants.get("participants")) {
-            if (player.get("summonerName").equals(summonerName)) {
+            String playerSummonerName = (String) player.get("summonerName");
+            if (playerSummonerName != null && playerSummonerName.equalsIgnoreCase(summonerName)) {
                 playerNumber = index;
                 tempMatch.setChampion((String) player.get("championName"));
                 tempMatch.setWin((boolean) player.get("win"));
