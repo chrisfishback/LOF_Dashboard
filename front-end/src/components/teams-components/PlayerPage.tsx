@@ -102,7 +102,7 @@ function PlayerPage(props : PlayerPageProps) {
     }
 
     useEffect(  () => {
-        getAccountInformation();
+        //getAccountInformation();
         getRankedMatches();
     }, []);
 
