@@ -5,7 +5,9 @@ Accept: application/json
 {
   "summonerName": "yummi cupkeki",
   "team": "Feet Finders",
-  "tagline": "NA1"
+  "tagline": "9690",
+  "rank": "",
+  "level": ""
 }
 
 ###
@@ -17,7 +19,9 @@ Accept: application/json
 {
   "summonerName": "SheriffSoco",
   "team": "Feet Finders",
-  "tagline": "NA1"
+  "tagline": "0765",
+  "rank": "",
+  "level": ""
 }
 
 ###

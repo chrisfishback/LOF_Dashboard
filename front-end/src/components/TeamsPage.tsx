@@ -31,12 +31,18 @@ function TeamsPage(props : TeamsPageProps) {
                         .then((response: AxiosResponse) => {
                             console.log("Backend refresh request for: ", player.summonerName);
 
-                            const matchInfo_url = `/api/ranked-matches/${player.summonerName}/${response.data.puuid}`
+                            let tempPlayer = getSummonerInformation(response.data.puuid, player)
+
+                            //may need this at the end of the summoner information instead - check for errors
+                            //need axios for the player put request to add level and rank to player table (put request)
+
+                            const matchInfo_url = `/api/ranked-matches/${player.summonerName}/${response.data.puuid}`;
 
                             axios.get(matchInfo_url)
                                 .then((response: AxiosResponse) => {
                                     console.log(response);
-                                    console.log("Got data for: ", player.summonerName )
+                                    console.log("Got data for: ", player.summonerName );
+
                                 })
                                 .catch((error) => {
                                     console.error('Error fetching league data:', error);
@@ -55,6 +61,58 @@ function TeamsPage(props : TeamsPageProps) {
             console.log('Please wait', timeLeft, 'seconds before refreshing again.');
             setShow(true);
         }
+    }
+
+    function getSummonerInformation(init_puuid: string, player: Player): Player {
+        const summonerId_url = `/api/get-summoner/${init_puuid}`;
+
+        axios.get(summonerId_url)
+            .then((response: AxiosResponse) => {
+                player.level = response.data.summonerLevel;
+                player = getLeagueInformation(response.data.id, player);
+            })
+            .catch((error) => {
+                console.error('Error fetching account data: ', error);
+            });
+
+        return player;
+    }
+
+    function getLeagueInformation(init_id: string, player: Player) : Player {
+        const leagueInfo_url = `/api/get-league-info/${init_id}`
+
+        axios.get(leagueInfo_url)
+            .then((response: AxiosResponse) => {
+                if (response.data.length === 0) {
+                    player.rank = "No rank available this season";
+                } else {
+                    player.rank = response.data[0].tier + " " +response.data[0].rank;
+                }
+
+                //setting player info via a put at the initial call for rank and level (may need to put here instead)
+                //setPlayerInfo(tempInfo);
+                let put_url = '/api/player/' + player.id
+
+                axios.put(put_url, {
+                    summonerName: player.summonerName,
+                    tagline: player.tagline,
+                    team: player.team,
+                    rank: player.rank,
+                    level: player.level
+                })
+                    .then(function (response) {
+                        console.log("Put Request for Rank and Level for: ", player.summonerName, response)
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    })
+
+            })
+            .catch((error) => {
+                console.error('Error fetching league data:', error);
+            });
+
+        return player;
     }
 
     return (

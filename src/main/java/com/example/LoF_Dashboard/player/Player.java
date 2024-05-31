@@ -11,17 +11,45 @@ public class Player {
     private String summonerName;
     private String team;
     private String tagline;
+    private String rank;
+    private String level;
 
     public Player(String summonerName, String team, String tagline) {
         this.summonerName = summonerName;
         this.team = team;
         this.tagline = tagline;
+        this.rank = "";
+        this.level = "";
+    }
+
+    public Player(String summonerName, String team, String tagline, String rank, String level) {
+        this.summonerName = summonerName;
+        this.team = team;
+        this.tagline = tagline;
+        this.rank = rank;
+        this.level = level;
     }
 
     public Player() {
         this.summonerName = "summonerName";
         this.team = "team";
         this.tagline = "tagline";
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getTagline() {

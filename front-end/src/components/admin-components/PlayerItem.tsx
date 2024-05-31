@@ -38,7 +38,9 @@ function PlayerItem(props: PlayerItemProps) {
         axios.put(url, {
             summonerName: summonerNameInput,
             tagline: taglineInput,
-            team: props.player.team
+            team: props.player.team,
+            rank: props.player.rank,
+            level: props.player.level
         })
             .then(function (response) {
                 console.log(response)

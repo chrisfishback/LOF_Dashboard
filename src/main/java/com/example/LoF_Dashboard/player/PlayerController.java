@@ -41,6 +41,8 @@ public class PlayerController {
                     player.setSummonerName(newPlayer.getSummonerName());
                     player.setTagline(newPlayer.getTagline());
                     player.setTeam(newPlayer.getTeam());
+                    player.setRank(newPlayer.getRank());
+                    player.setLevel((newPlayer.getLevel()));
                     return playerRepository.save(player);
                 })
                 .orElseGet(() -> {
