@@ -31,7 +31,7 @@ function TeamsPage(props : TeamsPageProps) {
                         .then((response: AxiosResponse) => {
                             console.log("Backend refresh request for: ", player.summonerName);
 
-                            let tempPlayer = getSummonerInformation(response.data.puuid, player)
+                            getSummonerInformation(response.data.puuid, player)
 
                             //may need this at the end of the summoner information instead - check for errors
                             //need axios for the player put request to add level and rank to player table (put request)
@@ -63,7 +63,7 @@ function TeamsPage(props : TeamsPageProps) {
         }
     }
 
-    function getSummonerInformation(init_puuid: string, player: Player): Player {
+    function getSummonerInformation(init_puuid: string, player: Player) {
         const summonerId_url = `/api/get-summoner/${init_puuid}`;
 
         axios.get(summonerId_url)
@@ -78,7 +78,7 @@ function TeamsPage(props : TeamsPageProps) {
         return player;
     }
 
-    function getLeagueInformation(init_id: string, player: Player) : Player {
+    function getLeagueInformation(init_id: string, player: Player) {
         const leagueInfo_url = `/api/get-league-info/${init_id}`
 
         axios.get(leagueInfo_url)

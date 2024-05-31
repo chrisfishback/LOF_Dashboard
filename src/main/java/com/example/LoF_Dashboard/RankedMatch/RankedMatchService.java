@@ -43,7 +43,7 @@ public class RankedMatchService {
         String getMatchIdsUrl = "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/"
                 + puuid + "/ids?type=ranked&start=0&count=5&api_key=" + apiKey;
 
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         return (List<String>) restTemplate.getForObject(getMatchIdsUrl, List.class);
     }
 
@@ -60,7 +60,7 @@ public class RankedMatchService {
     }
 
     public RankedMatch getMatchInfo(String matchId, String summonerName) throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(15000);
 
         RankedMatch tempMatch = new RankedMatch();
 

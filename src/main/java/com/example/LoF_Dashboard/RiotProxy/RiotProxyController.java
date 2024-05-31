@@ -22,7 +22,7 @@ public class RiotProxyController {
     // LinkedHashMap -> obj: "puuid", "gameName" (summoner name), "tagline"
     @GetMapping("/api/get-account/{summonerName}/{tagline}")
     public Object getAccount(@PathVariable String summonerName, @PathVariable String tagline) throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         String url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/"
                 + summonerName + "/" + tagline + "?api_key=" + apiKey;
         Object obj = restTemplate.getForObject(url, Object.class);
@@ -33,7 +33,7 @@ public class RiotProxyController {
     // LinkedHashMap -> obj: "id" (encrypted id), "accountId", "puuid", profileIconId (Integer), "revisionDate", "summonerLevel" (Integer)
     @GetMapping("/api/get-summoner/{puuid}")
     public Object getSummoner(@PathVariable String puuid) throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         String url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
                 + puuid + "?api_key=" + apiKey;
         Object obj = restTemplate.getForObject(url, Object.class);
@@ -44,7 +44,7 @@ public class RiotProxyController {
     // ArrayList -> obj: ???
     @GetMapping("/api/get-league-info/{id}")
     public Object getLeagueInformation(@PathVariable String id) throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         String url = "https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/"
                 + id + "?api_key=" + apiKey;
         Object obj = restTemplate.getForObject(url, Object.class);
