@@ -5,9 +5,9 @@ import Button from "@mui/material/Button";
 import { Team } from "../../App";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import * as React from "react";
 import axios, { AxiosResponse } from "axios";
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 
 type AddWeekGamesProps = {
     teams: Team[];
@@ -27,29 +27,36 @@ export type RecGameInfo = {
 
 function AddWeekGames(props: AddWeekGamesProps) {
     const [gameWeeks, setGameWeeks] = useState<GameWeek[]>([]);
-    const [gameIdInput, setGameIdInput] = useState("");
-    const [team1Input, setTeam1Input] = useState("");
-    const [team2Input, setTeam2Input] = useState("");
-    const [weekInput, setWeekInput] = useState(1);
+    const [gameIdInput, setGameIdInput] = useState<string>("");
+    const [team1Input, setTeam1Input] = useState<string>("");
+    const [team2Input, setTeam2Input] = useState<string>("");
+    const [weekInput, setWeekInput] = useState<number | "">(""); // Initialize with an empty string
 
     function handleWeekSubmit(event: React.FormEvent) {
         event.preventDefault();
-        console.log("new week");
         let tempWeek: GameWeek = {
             week: gameWeeks.length + 1,
             games: [],
         };
         setGameWeeks(prevState => [...prevState, tempWeek]);
+        setWeekInput(tempWeek.week); // Update weekInput to the new week
     }
 
     function handleGameSubmit(event: React.FormEvent) {
         event.preventDefault();
 
+        // Ensure weekInput is within range
+        const weekExists = gameWeeks.some(week => week.week === weekInput);
+        if (!weekExists) {
+            console.error(`Week ${weekInput} is out of range`);
+            return;
+        }
+
         let tempGame: RecGameInfo = {
             gameId: gameIdInput,
             team1: team1Input,
             team2: team2Input,
-            week: weekInput,
+            week: weekInput as number, // Ensure the type is number
         };
 
         axios.post('/api/game', tempGame)
@@ -77,13 +84,11 @@ function AddWeekGames(props: AddWeekGamesProps) {
         setTeam2Input("");
     }
 
-    function handleDeleteWeek(week: number) {
-        console.log("Unsure if I would like to implement this feature: ", week);
-        // implement delete functionality if required
+    function handlePopulateWeekData(week: number) {
+        console.log("Populate Week Data: ", week);
     }
 
     function parseGames(games: RecGameInfo[]) {
-        // need map to only update state once
         const weeksMap = new Map<number, RecGameInfo[]>();
 
         games.forEach(game => {
@@ -93,7 +98,6 @@ function AddWeekGames(props: AddWeekGamesProps) {
             weeksMap.get(game.week)?.push(game);
         });
 
-        // sort games for ~supreme~ usability
         const newGameWeeks = Array.from(weeksMap.entries()).map(([week, games]) => ({
             week,
             games: games.sort((a, b) => a.team1.localeCompare(b.team1))
@@ -103,7 +107,6 @@ function AddWeekGames(props: AddWeekGamesProps) {
     }
 
     useEffect(() => {
-        // Get request to get game data and populate page
         axios.get('/api/game')
             .then((response: AxiosResponse<RecGameInfo[]>) => {
                 console.log(response.data);
@@ -114,6 +117,13 @@ function AddWeekGames(props: AddWeekGamesProps) {
             });
     }, []);
 
+    useEffect(() => {
+        // Update weekInput to the first week if gameWeeks is populated
+        if (gameWeeks.length > 0 && !gameWeeks.some(week => week.week === weekInput)) {
+            setWeekInput(gameWeeks[0].week);
+        }
+    }, [gameWeeks]);
+
     return (
         <Box sx={{ width: '100%', marginTop: 4 }}>
             <Grid container spacing={2} sx={{ maxWidth: 600, margin: 'auto' }}>
@@ -121,8 +131,8 @@ function AddWeekGames(props: AddWeekGamesProps) {
                     <Grid item xs={12} key={weekIndex}>
                         <Typography variant="h5" sx={{ bgcolor: '#FDB0C0', borderRadius: 1, color: 'white', padding: 1 }}>
                             Week {gameWeek.week}
-                            <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteWeek(gameWeek.week)} sx={{ marginLeft: '420px' }}>
-                                <DeleteIcon />
+                            <IconButton edge="end" aria-label="upload" onClick={() => handlePopulateWeekData(gameWeek.week)} sx={{ marginLeft: '420px' }}>
+                                <DriveFolderUploadIcon />
                             </IconButton>
                         </Typography>
                         <List>
@@ -159,7 +169,11 @@ function AddWeekGames(props: AddWeekGamesProps) {
                                 label="Week"
                                 required
                             >
-                                {gameWeeks.map(el => (<MenuItem key={el.week} value={el.week}>{el.week}</MenuItem>))}
+                                {gameWeeks.map(el => (
+                                    <MenuItem key={el.week} value={el.week}>
+                                        {el.week}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -180,7 +194,11 @@ function AddWeekGames(props: AddWeekGamesProps) {
                                 label="Team 1"
                                 required
                             >
-                                {props.teams.map(el => (<MenuItem key={el.name} value={el.name}>{el.name}</MenuItem>))}
+                                {props.teams.map(el => (
+                                    <MenuItem key={el.name} value={el.name}>
+                                        {el.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -195,7 +213,11 @@ function AddWeekGames(props: AddWeekGamesProps) {
                                 label="Team 2"
                                 required
                             >
-                                {props.teams.map(el => (<MenuItem key={el.name} value={el.name}>{el.name}</MenuItem>))}
+                                {props.teams.map(el => (
+                                    <MenuItem key={el.name} value={el.name}>
+                                        {el.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -209,4 +231,3 @@ function AddWeekGames(props: AddWeekGamesProps) {
 }
 
 export default AddWeekGames;
-
