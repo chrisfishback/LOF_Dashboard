@@ -89,8 +89,6 @@ function TeamsPage(props : TeamsPageProps) {
                     player.rank = response.data[0].tier + " " +response.data[0].rank;
                 }
 
-                //setting player info via a put at the initial call for rank and level (may need to put here instead)
-                //setPlayerInfo(tempInfo);
                 let put_url = '/api/player/' + player.id
 
                 axios.put(put_url, {

@@ -2,7 +2,7 @@ import {Player, Team} from "../../App.tsx";
 import * as React from "react";
 import {FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import TeamsList from "./TeamsList.tsx";
 
@@ -15,6 +15,11 @@ function ModifyTeams(props : AddTeamPlayersProps) {
     const [summonerNameInput, setSummonerNameInput] = useState("");
     const [taglineInput, setTaglineInput] = useState("");
     const [teamInput, setTeamInput] = useState("");
+    const [newTeamName, setNewTeamName] = useState("");
+
+    useEffect(() => {
+        console.log("Teams updated: ", props.teams);
+    }, [props.teams]);
 
     function handlePlayerSubmit(e:any) {
         e.preventDefault();
@@ -22,7 +27,9 @@ function ModifyTeams(props : AddTeamPlayersProps) {
         axios.post('/api/player', {
             summonerName: summonerNameInput,
             tagline: taglineInput,
-            team: teamInput
+            team: teamInput,
+            rank: "",
+            level: ""
         })
             .then(function (response) {
                 console.log(response);
@@ -38,12 +45,18 @@ function ModifyTeams(props : AddTeamPlayersProps) {
         e.preventDefault();
 
         axios.post('/api/teams', {
-            team: teamInput
+            team: newTeamName
         })
             .then(function (response) {
                 console.log(response);
 
-                props.setTeams(prevState => [...prevState, response.data]);
+                let tempTeam: Team = {
+                    name: newTeamName,
+                    players: []
+                }
+
+                props.setTeams(prevState => [...prevState, tempTeam]);
+                setNewTeamName("");
             })
             .catch(function (error) {
                 console.error(error);
@@ -95,7 +108,8 @@ function ModifyTeams(props : AddTeamPlayersProps) {
                     <Grid item xs={12}>
                         <TextField required id="team-name" label="Team Name" variant="standard"
                                    sx={{width: '100%'}}
-                                   onChange={e => setTeamInput(e.target.value)}/>
+                                   value={newTeamName}
+                                   onChange={e => setNewTeamName(e.target.value)}/>
                     </Grid>
                     <Grid item xs={3} sx={{paddingTop: 2}}>
                         <Button variant="contained" color={'primary'} type={'submit'}>Add Team</Button>
