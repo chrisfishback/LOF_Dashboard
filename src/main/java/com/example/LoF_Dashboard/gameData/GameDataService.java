@@ -24,6 +24,10 @@ public class GameDataService {
         this.restTemplate = restTemplate;
     }
 
+    public List<GameData> getGameData() {
+        return gameDataRepository.findAll();
+    }
+
     public void createGameData(String gameId) {
         String url = "https://americas.api.riotgames.com/lol/match/v5/matches/" + gameId + "?api_key=" + apiKey;
         Map<String, Object> fetchedMatchData = getMatchData(url);
@@ -74,4 +78,5 @@ public class GameDataService {
         tempGameData.setInhibitorsKilled(((Number) player.get("inhibitorKills")).intValue());
         return tempGameData;
     }
+
 }

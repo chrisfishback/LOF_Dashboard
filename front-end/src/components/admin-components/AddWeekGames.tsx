@@ -59,6 +59,7 @@ function AddWeekGames(props: AddWeekGamesProps) {
             week: weekInput as number, // Ensure the type is number
         };
 
+        //add to game table
         axios.post('/api/game', tempGame)
             .then((response) => {
                 console.log(response);
@@ -79,13 +80,22 @@ function AddWeekGames(props: AddWeekGamesProps) {
                 console.error(error);
             });
 
+        //add to gameData table
+        axios.post('/api/game-data/'+gameIdInput)
+            .then(() => {
+                console.log("Created game data for: " + gameIdInput)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
         setGameIdInput("");
         setTeam1Input("");
         setTeam2Input("");
     }
 
     function handlePopulateWeekData(week: number) {
-        console.log("Populate Week Data: ", week);
+        console.log("Populate Week Data (Will probably implement just uploading upon adding a week: ", week);
     }
 
     function parseGames(games: RecGameInfo[]) {
