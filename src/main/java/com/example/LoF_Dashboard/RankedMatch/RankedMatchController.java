@@ -32,6 +32,5 @@ public class RankedMatchController {
         List<RankedMatch> matchHistory = rankedMatchService.createRankedMatchHistory(summoner, puuid);
         return matchHistory;
     }
-    //curl -X GET http://localhost:8080/api/ranked-matches/TheBigHook/DAVg3J8PjIO2EQRWSWRsEDHDvVOKN09yOcB1MgmMMRKgIbeGGYmUR9mt0B_nCp3qFP7d-0MF1O5lpg
 
 }
