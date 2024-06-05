@@ -8,7 +8,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import logo from "../../assets/logo1.png"
 import {Link} from "react-router-dom";
 
 export function Header() {
@@ -26,14 +25,8 @@ export function Header() {
         <AppBar position="static" sx={{
             backgroundColor: '#FDB0C0',
         }}>
-            <Container maxWidth="xl">
+            <Container sx={{maxWidth: 'none !important'}}>
                 <Toolbar disableGutters>
-                    <Box
-                        component="img"
-                        sx={{ height: 64, }}
-                        alt="LoF Logo"
-                        src={ logo }
-                    />
                     <Typography
                         variant="h6"
                         noWrap
@@ -52,10 +45,12 @@ export function Header() {
                         League of Friendship
                     </Typography>
 
-                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                    <Box sx={{ flexGrow: 1 }} />
+
+                    <Box sx={{ flexGrow: 1, display: {xs: 'contents', md: 'none'}}}>
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
+                            aria-label="select for menu appbar"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
@@ -85,7 +80,7 @@ export function Header() {
                                 <Button
                                     key='dashboard'
                                     onClick={handleCloseNavMenu}
-                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    sx={{my: 2, color: 'black', display: 'block'}}>
                                     Dashboard
                                 </Button>
                             </Link>
@@ -93,7 +88,7 @@ export function Header() {
                                 <Button
                                     key='home'
                                     onClick={handleCloseNavMenu}
-                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    sx={{my: 2, color: 'black', display: 'block', width: '100%'}}>
                                     Teams
                                 </Button>
                             </Link>
@@ -101,7 +96,7 @@ export function Header() {
                                 <Button
                                     key='Admin'
                                     onClick={handleCloseNavMenu}
-                                    sx={{my: 2, color: 'white', display: 'block'}}>
+                                    sx={{my: 2, color: 'black', display: 'block', width: '100%'}}>
                                     Admin
                                 </Button>
                             </Link>
@@ -125,7 +120,7 @@ export function Header() {
                     >
                         LoF
                     </Typography>
-                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'contents'}}}>
                         <Link style={{ textDecoration: 'none' }} to={"/"}>
                             <Button
                                 key='dashboard'

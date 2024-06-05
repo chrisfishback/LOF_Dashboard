@@ -29,28 +29,30 @@ function Dashboard() {
     if (!gamesData) {
         return (
             <>
-                <h1>Bak wa here</h1>
+                <h1>Loading...</h1>
             </>
         );
     }
 
     return (
         <>
-            <Container>
-                <Typography variant="h3" gutterBottom sx={{paddingTop:4}}>
-                    Dashboard
-                </Typography>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={7}>
-                        <KDAChart gamesData={gamesData} />
+            <div className={'root'}>
+                <Container>
+                    <Typography variant="h3" gutterBottom sx={{paddingTop:4}}>
+                        Dashboard
+                    </Typography>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={7}>
+                            <KDAChart gamesData={gamesData} />
+                        </Grid>
+                        <Grid item xs={12} md={5}>
+                            <DamagePieChart gamesData={gamesData} />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={5}>
-                        <DamagePieChart gamesData={gamesData} />
-                    </Grid>
-                </Grid>
-            </Container>
-            <DamagePieChartMui gamesData={gamesData} />
-            <KDAChartMui gamesData={gamesData} />
+                </Container>
+                <DamagePieChartMui gamesData={gamesData} />
+                <KDAChartMui gamesData={gamesData} />
+            </div>
         </>
     );
 }

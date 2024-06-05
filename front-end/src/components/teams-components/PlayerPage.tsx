@@ -9,16 +9,10 @@ type PlayerPageProps = { player: Player };
 
 function PlayerPage(props : PlayerPageProps) {
 
-    //const [playerInfo, setPlayerInfo] = useState<PlayerInfo>({} as PlayerInfo)
     const [gamesInfo, setGamesInfo] = useState<GameInfo[]>([])
 
     let {id, summonerName, team,} = props.player;
 
-    // let tempInfo : PlayerInfo = {
-    //     summonerName: summonerName,
-    //     rank: "temp",
-    //     summonerLevel: "-1",
-    // }
 
     function getRankedMatches() {
         const rankedMatches_url = `/api/ranked-matches/${summonerName}`;
@@ -32,51 +26,6 @@ function PlayerPage(props : PlayerPageProps) {
                 console.error('Error fetching summoner data: ', error);
             });
     }
-
-    // function getAccountInformation() {
-    //     const puuid_url = `/api/get-account/${summonerName}/${tagline}`;
-    //
-    //     axios.get(puuid_url)
-    //         .then((response: AxiosResponse) => {
-    //             console.log("Get Account Info on Load for: ", summonerName);
-    //             //puuid = response.data.puuid;
-    //             getSummonerInformation(response.data.puuid);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching summoner data: ', error);
-    //         });
-    // }
-    //
-    // function getSummonerInformation(init_puuid: string) {
-    //     const summonerId_url = `/api/get-summoner/${init_puuid}`;
-    //
-    //     axios.get(summonerId_url)
-    //         .then((response: AxiosResponse) => {
-    //             tempInfo.summonerLevel = response.data.summonerLevel;
-    //             getLeagueInformation(response.data.id);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching account data: ', error);
-    //         });
-    // }
-    //
-    // function getLeagueInformation(init_id: string) {
-    //     const leagueInfo_url = `/api/get-league-info/${init_id}`
-    //
-    //     axios.get(leagueInfo_url)
-    //         .then((response: AxiosResponse) => {
-    //             if (response.data.length === 0) {
-    //                 tempInfo.rank = "No rank available this season";
-    //             } else {
-    //                 tempInfo.rank = response.data[0].tier + " " +response.data[0].rank;
-    //             }
-    //
-    //             setPlayerInfo(tempInfo);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching league data:', error);
-    //         });
-    // }
 
     function parseMatchData(matchData: any)  {
 

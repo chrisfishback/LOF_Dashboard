@@ -89,11 +89,13 @@ function Admin(props: AdminPageProps) {
 
 export default function AdminPageWrapper(props: AdminPageProps) {
     return (
-        <Routes>
-            <Route path="/" element={<Navigate to="/admin/modify-teams" />} />
-            <Route path="/modify-teams" element={<Admin {...props} />} />
-            <Route path="/add-week-games" element={<Admin {...props} />} />
-            <Route path="*" element={<Navigate to="/admin/modify-teams" />} />
-        </Routes>
+        <div className={'root'}>
+            <Routes>
+                <Route path="/" element={<Navigate to="/admin/modify-teams" />} />
+                <Route path="/modify-teams" element={<Admin {...props} />} />
+                <Route path="/add-week-games" element={<Admin {...props} />} />
+                <Route path="*" element={<Navigate to="/admin/modify-teams" />} />
+            </Routes>
+        </div>
     );
 }
