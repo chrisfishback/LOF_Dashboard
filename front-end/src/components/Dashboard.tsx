@@ -7,9 +7,11 @@ import DamagePieChart from "./dashboard-components/charts/DamagePieChart.tsx";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import {Grid} from "@mui/material";
+import DamagePieChartMui from "./dashboard-components/charts/DamagePieChartMui.tsx";
+import KDAChartMui from "./dashboard-components/charts/KDAChartMui.tsx";
 
 function Dashboard() {
-    const [gamesData, setGamesData] = useState<AllSummonerStatsType>({ totalsPerSummoner: [] });
+    const [gamesData, setGamesData] = useState<AllSummonerStatsType>();
 
     useEffect(() => {
         axios.get('api/game-data')
@@ -23,6 +25,14 @@ function Dashboard() {
                 console.error(error);
             });
     }, []);
+
+    if (!gamesData) {
+        return (
+            <>
+                <h1>Bak wa here</h1>
+            </>
+        );
+    }
 
     return (
         <>
@@ -39,6 +49,8 @@ function Dashboard() {
                     </Grid>
                 </Grid>
             </Container>
+            <DamagePieChartMui gamesData={gamesData} />
+            <KDAChartMui gamesData={gamesData} />
         </>
     );
 }

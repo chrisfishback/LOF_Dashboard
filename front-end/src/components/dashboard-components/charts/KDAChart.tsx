@@ -6,8 +6,15 @@ type KDAChartProps = {
     gamesData: AllSummonerStatsType;
 }
 
-function KDAChart({ gamesData }: KDAChartProps) {
-    const top5Players = gamesData.totalsPerSummoner
+function KDAChart( gamesData: KDAChartProps) {
+
+    if (!gamesData) {
+        return (
+            <p>ANGER</p>
+        )
+    }
+
+    const top5Players = gamesData.gamesData.totalsPerSummoner
         .sort((a: summonerStats, b: summonerStats) => b.kills - a.kills) // Sort by kills in descending order
         .slice(0, 5); // Select the top 5 players
 
@@ -38,8 +45,5 @@ function KDAChart({ gamesData }: KDAChartProps) {
     );
 }
 
-KDAChart.defaultProps = {
-    gamesData: { totalsPerSummoner: [] }
-};
 
 export default KDAChart;
