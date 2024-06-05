@@ -1,4 +1,4 @@
-export function combineBySummonerName(data: summonerStats[]): allSummonerStats {
+export function combineBySummonerName(data: summonerStats[]): AllSummonerStatsType {
     const result: { [key: string]: summonerStats } = {};
 
     for (const item of data) {
@@ -61,6 +61,6 @@ export type summonerStats = {
     totalMinionsKilled: number;
 }
 
-export type allSummonerStats = {
+export type AllSummonerStatsType = {
     totalsPerSummoner: summonerStats[];
 }
