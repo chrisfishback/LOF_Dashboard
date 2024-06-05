@@ -79,7 +79,7 @@ function PlayerItem(props: PlayerItemProps) {
                             required
                             id="outlined-required"
                             label="Summoner Name"
-                            defaultValue={summonerNameInput}
+                            defaultValue={props.player.summonerName}
                             onChange={e => setSummonerNameInput(e.target.value)}
                         />
                         <ListItemText primary={'#'} sx={{maxWidth: 10}}/>
@@ -87,7 +87,7 @@ function PlayerItem(props: PlayerItemProps) {
                             required
                             id="outlined-required"
                             label="Tagline"
-                            defaultValue={taglineInput}
+                            defaultValue={props.player.tagline}
                             onChange={e => setTaglineInput(e.target.value)}
                         />
                         <IconButton edge="end" aria-label="save" onClick={handleEditRequest}>
